@@ -4,7 +4,7 @@ import { Outlet, useNavigate } from 'react-router-dom';
 
 const Navbar = styled.nav`
   width: 100vw;
-  position: fixed;
+  position: sticky;
   top: 0;
   left: 0;
 `;
@@ -22,7 +22,7 @@ const NavItem = styled(motion.li)`
   font-size: 2em;
   display: inline-block;
   flex: 1;
-  border: 1px solid black;
+  border: 1px solid #5c6976;
   line-height: 2em;
 `;
 
@@ -31,8 +31,22 @@ const NavElement: React.FC<{ title: string; link: string }> = ({
   link,
 }) => {
   const navigate = useNavigate();
-  return <NavItem onClick={() => navigate(link)}>{title}</NavItem>;
+  return (
+    <NavItem
+      onClick={() => navigate(link)}
+      initial={{ backgroundColor: '#708090' }}
+      whileHover={{ backgroundColor: '#5C6976' }}
+      whileTap={{ backgroundColor: '#8A97A4' }}
+    >
+      {title}
+    </NavItem>
+  );
 };
+
+const Page = styled.div`
+  max-width: 100vw;
+  overflow: hidden;
+`;
 
 export const Layout: React.FC = () => {
   return (
@@ -44,7 +58,9 @@ export const Layout: React.FC = () => {
           <NavElement link="/stores" title="Stores" />
         </Navlist>
       </Navbar>
-      <Outlet />
+      <Page>
+        <Outlet />
+      </Page>{' '}
     </div>
   );
 };
