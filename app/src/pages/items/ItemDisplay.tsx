@@ -1,14 +1,22 @@
 import styled from '@emotion/styled';
-import React from 'react';
+import React, { useEffect } from 'react';
+import { v4 as uuidv4 } from 'uuid';
+import { ItemDescriptionInput } from './inputs/ItemDescriptionInput';
 import { ItemDisplayInput } from './inputs/ItemDisplayInput';
 import { ItemMagicCheckbox } from './inputs/ItemMagicCheckbox';
 import { ItemRaritySelect } from './inputs/ItemRaritySelect';
 import { ItemStockRangeInput } from './inputs/ItemStockRangeInput';
+import { ItemValueInput } from './inputs/ItemValueInput';
 import { item } from './item';
 
 const ItemDisplayContainer = styled.div``;
 
-export const ItemDisplay: React.FC<{ item?: item }> = ({ item }) => {
+const ItemSaveButton = styled.button``;
+
+export const ItemDisplay: React.FC<{
+  item: item | undefined;
+  saveItem: (item: item) => void;
+}> = ({ item, saveItem }) => {
   const [name, setName] = React.useState(item?.name ?? '');
   const [value, setValue] = React.useState(item?.value ?? 0);
   const [weight, setWeight] = React.useState(item?.weight ?? 0);
@@ -27,19 +35,26 @@ export const ItemDisplay: React.FC<{ item?: item }> = ({ item }) => {
     return tagsIn.replaceAll(',', '').split(' ');
   };
 
+  useEffect(() => {
+    setName(item?.name ?? '');
+    setValue(item?.value ?? 0);
+    setWeight(item?.weight ?? 0);
+    setDescription(item?.description ?? '');
+    setRarity(item?.rarity ?? 'common');
+    setMagic(item?.magic ?? false);
+    setTags(item?.tags ?? []);
+    setStockLowEnd(item?.stockRange.low ?? 0);
+    setStockHighEnd(item?.stockRange.high ?? 10);
+  }, [item]);
+
   return (
     <ItemDisplayContainer>
       <ItemDisplayInput label="Name" value={name} onChange={setName} />
-      <ItemDisplayInput
-        type="number"
-        label="Value"
-        value={`${value}`}
-        onChange={(num) => {
-          try {
-            setValue(Number(num));
-          } catch (e) {
-            console.log(e);
-          }
+      <ItemValueInput
+        value={value}
+        onChange={(value: number) => {
+          console.log(value);
+          setValue(value);
         }}
       />
       <ItemDisplayInput
@@ -54,7 +69,7 @@ export const ItemDisplay: React.FC<{ item?: item }> = ({ item }) => {
           }
         }}
       />
-      <ItemDisplayInput
+      <ItemDescriptionInput
         label="Description"
         value={description}
         onChange={setDescription}
@@ -72,6 +87,26 @@ export const ItemDisplay: React.FC<{ item?: item }> = ({ item }) => {
         highValue={stockHighEnd}
         highValueChange={setStockHighEnd}
       />
+      <ItemSaveButton
+        onClick={() =>
+          saveItem({
+            uid: item?.uid ?? uuidv4(),
+            name: name,
+            value: value,
+            weight: weight,
+            description: description,
+            rarity: rarity,
+            magic: magic,
+            tags: tags,
+            stockRange: {
+              low: stockLowEnd,
+              high: stockHighEnd,
+            },
+          })
+        }
+      >
+        Save
+      </ItemSaveButton>
     </ItemDisplayContainer>
   );
 };

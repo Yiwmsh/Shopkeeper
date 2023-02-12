@@ -3,12 +3,16 @@ import { ItemDisplayProps } from './ItemDisplayInput';
 
 const DescriptionRow = styled.div`
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
 `;
 
 const DescriptionLabel = styled.label``;
 
-const DescriptionField = styled.textarea``;
+const DescriptionField = styled.textarea`
+  resize: both;
+  width: 750px;
+  height: 250px;
+`;
 
 export const ItemDescriptionInput: React.FC<ItemDisplayProps> = ({
   label,
