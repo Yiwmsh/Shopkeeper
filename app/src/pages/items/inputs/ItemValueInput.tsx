@@ -1,6 +1,11 @@
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
-import { exchangeGold } from '../../../functions/currencyFunctions';
+import {
+  combineCurrency,
+  exchangeCopper,
+  exchangeGold,
+  exchangeSilver,
+} from '../../../functions/currencyFunctions';
 
 const ValueField = styled.input`
   width: 50px;
@@ -30,22 +35,20 @@ export const ItemValueInput: React.FC<{
   const [silver, baseSetSilver] = React.useState(values.silver);
   const [copper, baseSetCopper] = React.useState(values.copper);
 
-  const goldRef = React.useRef<HTMLInputElement>(null);
-  const silverRef = React.useRef<HTMLInputElement>(null);
-  const copperRef = React.useRef<HTMLInputElement>(null);
-
   const setGold = (value: number) => {
     baseSetGold(value);
     if (goldRef.current) {
       goldRef.current.value = `${value}`;
     }
   };
+
   const setSilver = (value: number) => {
     baseSetSilver(value);
     if (silverRef.current) {
       silverRef.current.value = `${value}`;
     }
   };
+
   const setCopper = (value: number) => {
     baseSetCopper(value);
     if (copperRef.current) {
@@ -53,15 +56,15 @@ export const ItemValueInput: React.FC<{
     }
   };
 
-  const setValue = () => {
-    onChange(gold + silver / 10 + copper / 100);
-  };
+  const goldRef = React.useRef<HTMLInputElement>(null);
+  const silverRef = React.useRef<HTMLInputElement>(null);
+  const copperRef = React.useRef<HTMLInputElement>(null);
 
   useEffect(() => {
-    const exchangedValue = exchangeGold(value);
-    setGold(exchangedValue.gold);
-    setSilver(exchangedValue.silver);
-    setCopper(exchangedValue.copper);
+    const exchange = exchangeGold(value);
+    setGold(exchange.gold);
+    setSilver(exchange.silver);
+    setCopper(exchange.copper);
   }, [value]);
 
   return (
@@ -72,9 +75,16 @@ export const ItemValueInput: React.FC<{
           name="gold"
           type="number"
           ref={goldRef}
-          onChange={(event) => {
-            setGold(Number(event.target.value));
-            setValue();
+          min="0"
+          onBlur={(event) => {
+            const value = Number(event.target.value);
+            if (!Number.isNaN(value)) {
+              const exchange = exchangeGold(value);
+              setGold(exchange.gold);
+              setSilver(silver + exchange.silver);
+              setCopper(copper + exchange.copper);
+              onChange(combineCurrency(gold, silver, copper));
+            }
           }}
         />
         <ValueLabel htmlFor="gold">Gold</ValueLabel>
@@ -83,15 +93,17 @@ export const ItemValueInput: React.FC<{
         <ValueField
           name="silver"
           type="number"
+          min="0"
           ref={silverRef}
-          onChange={(event) => {
+          onBlur={(event) => {
             const value = Number(event.target.value);
-            const silver = value > 10 ? value - Math.floor(value / 10) : value;
-            setSilver(value);
-            if (value > 10) {
-              setGold(gold + Math.floor(value / 10));
+            if (!Number.isNaN(value)) {
+              const exchange = exchangeSilver(value);
+              setGold(gold + exchange.gold);
+              setSilver(exchange.silver);
+              setCopper(copper + exchange.copper);
+              onChange(combineCurrency(gold, silver, copper));
             }
-            setValue();
           }}
         />
         <ValueLabel htmlFor="silver">Silver</ValueLabel>
@@ -100,20 +112,21 @@ export const ItemValueInput: React.FC<{
         <ValueField
           name="copper"
           type="number"
+          min="0"
           ref={copperRef}
-          onChange={(event) => {
+          onBlur={(event) => {
+            debugger;
             const value = Number(event.target.value);
-            if (value > 10) {
-              if (value > 100) {
-                const gold = Math.floor(value / 100);
-              } else {
-              }
-            } else {
+            if (!Number.isNaN(value)) {
+              const exchange = exchangeCopper(value);
+              setGold(gold + exchange.gold);
+              setSilver(silver + exchange.silver);
+              setCopper(exchange.copper);
+              onChange(combineCurrency(gold, silver, copper));
             }
-            setValue();
           }}
         />
-        <ValueLabel htmlFor="copper">Copper</ValueLabel>
+        <ValueLabel>Copper</ValueLabel>
       </ValueInputSubdivision>
     </ValueInputContainer>
   );
