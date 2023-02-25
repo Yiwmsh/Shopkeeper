@@ -31,34 +31,9 @@ export const ItemValueInput: React.FC<{
   onChange: (value: number) => void;
 }> = ({ value, onChange }) => {
   const values = exchangeGold(value);
-  const [gold, baseSetGold] = React.useState(values.gold);
-  const [silver, baseSetSilver] = React.useState(values.silver);
-  const [copper, baseSetCopper] = React.useState(values.copper);
-
-  const setGold = (value: number) => {
-    baseSetGold(value);
-    if (goldRef.current) {
-      goldRef.current.value = `${value}`;
-    }
-  };
-
-  const setSilver = (value: number) => {
-    baseSetSilver(value);
-    if (silverRef.current) {
-      silverRef.current.value = `${value}`;
-    }
-  };
-
-  const setCopper = (value: number) => {
-    baseSetCopper(value);
-    if (copperRef.current) {
-      copperRef.current.value = `${value}`;
-    }
-  };
-
-  const goldRef = React.useRef<HTMLInputElement>(null);
-  const silverRef = React.useRef<HTMLInputElement>(null);
-  const copperRef = React.useRef<HTMLInputElement>(null);
+  const [gold, setGold] = React.useState(values.gold);
+  const [silver, setSilver] = React.useState(values.silver);
+  const [copper, setCopper] = React.useState(values.copper);
 
   useEffect(() => {
     const exchange = exchangeGold(value);
@@ -74,17 +49,12 @@ export const ItemValueInput: React.FC<{
         <ValueField
           name="gold"
           type="number"
-          ref={goldRef}
           min="0"
+          value={gold}
+          onChange={(e) => setGold(Number(e.target.value))}
           onBlur={(event) => {
-            const value = Number(event.target.value);
-            if (!Number.isNaN(value)) {
-              const exchange = exchangeGold(value);
-              setGold(exchange.gold);
-              setSilver(silver + exchange.silver);
-              setCopper(copper + exchange.copper);
-              onChange(combineCurrency(gold, silver, copper));
-            }
+            const target = Number(event.target.value)
+            onChange(target + (silver / 10) + (copper / 100))
           }}
         />
         <ValueLabel htmlFor="gold">Gold</ValueLabel>
@@ -94,16 +64,11 @@ export const ItemValueInput: React.FC<{
           name="silver"
           type="number"
           min="0"
-          ref={silverRef}
+          value={silver}
+          onChange={(e) => setSilver(Number(e.target.value))}
           onBlur={(event) => {
-            const value = Number(event.target.value);
-            if (!Number.isNaN(value)) {
-              const exchange = exchangeSilver(value);
-              setGold(gold + exchange.gold);
-              setSilver(exchange.silver);
-              setCopper(copper + exchange.copper);
-              onChange(combineCurrency(gold, silver, copper));
-            }
+            const target = Number(event.target.value)
+            onChange(gold + (target / 10) + (copper / 100))
           }}
         />
         <ValueLabel htmlFor="silver">Silver</ValueLabel>
@@ -113,17 +78,11 @@ export const ItemValueInput: React.FC<{
           name="copper"
           type="number"
           min="0"
-          ref={copperRef}
+          value={copper}
+          onChange={(e) => setCopper(Number(e.target.value))}
           onBlur={(event) => {
-            debugger;
-            const value = Number(event.target.value);
-            if (!Number.isNaN(value)) {
-              const exchange = exchangeCopper(value);
-              setGold(gold + exchange.gold);
-              setSilver(silver + exchange.silver);
-              setCopper(exchange.copper);
-              onChange(combineCurrency(gold, silver, copper));
-            }
+            const target = Number(event.target.value)
+            onChange(gold + (silver / 10) + (target / 100))
           }}
         />
         <ValueLabel>Copper</ValueLabel>

@@ -57,6 +57,7 @@ export const ItemDisplay: React.FC<{
           setValue(value);
         }}
       />
+
       <ItemDisplayInput
         type="number"
         label="Weight"
