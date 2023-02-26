@@ -2,7 +2,7 @@
   "name": "shopkeeper",
   "version": "0.0.1",
   "description": "Placeholder",
-  "main": "main.ts",
+  "main": "main.js",
   "author": "yiwmsh <lonelevelsands@gmail.com>",
   "license": "MIT",
   "private": true,

@@ -2,7 +2,8 @@ import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
 import { ItemDisplay } from './ItemDisplay';
 import { ListItem } from './ListItem';
-import { item, makeRandomItem } from './item';
+import { Item, makeRandomItem } from './item';
+
 const ItemsContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -12,18 +13,20 @@ const ItemsContainer = styled.div`
 const ItemsList = styled.div``;
 
 export const ItemsPage: React.FC = () => {
-  const [items, setItems] = React.useState<item[]>([]);
-  const [selectedItem, setSelectedItem] = React.useState<item | undefined>();
+  const ipcRenderer = (window as any).ipcRenderer;
+  const [items, setItems] = React.useState<Item[]>([]);
+  const [selectedItem, setSelectedItem] = React.useState<Item | undefined>();
+  const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
   useEffect(() => {
-    const templateItems: item[] = [];
+    const templateItems: Item[] = [];
     for (let i = 0; i < 10; i++) {
       templateItems.push(makeRandomItem());
     }
     setItems(templateItems);
   }, []);
 
-  const saveItem = (item: item) => {
+  const saveItem = (item: Item) => {
     const matchingItem = items.filter((arrItem) => arrItem.uid === item.uid);
     if (matchingItem.length < 1) {
       setItems([item, ...items]);
@@ -31,7 +34,10 @@ export const ItemsPage: React.FC = () => {
       const otherItems = items.filter((arrItem) => arrItem.uid !== item.uid);
       setItems([item, ...otherItems]);
     }
-    console.log(items);
+    setIsSaving(true);
+    ipcRenderer.send('saveItems', {
+      items: items,
+    });
   };
 
   return (
@@ -42,7 +48,7 @@ export const ItemsPage: React.FC = () => {
           <ListItem
             key={item.uid}
             item={item}
-            onClick={(item: item) => setSelectedItem(item)}
+            onClick={(item: Item) => setSelectedItem(item)}
           />
         ))}
       </ItemsList>

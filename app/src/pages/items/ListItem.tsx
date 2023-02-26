@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import { displayValue } from '../../functions/currencyFunctions';
-import { item } from './item';
+import { Item } from './item';
 
 const ItemRow = styled.button`
   display: flex;
@@ -19,8 +19,8 @@ const ListItemName = styled.div`
 const ListItemPrice = styled.div``;
 
 export const ListItem: React.FC<{
-  item: item;
-  onClick: (item: item) => void;
+  item: Item;
+  onClick: (item: Item) => void;
 }> = ({ item, onClick }) => {
   return (
     <ItemRow onClick={() => onClick(item)}>

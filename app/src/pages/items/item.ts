@@ -1,5 +1,5 @@
 import { v4 as uuidv4 } from 'uuid';
-export interface item {
+export interface Item {
   uid: string;
   name: string;
   value: number;
@@ -47,7 +47,7 @@ export const rarities: string[] = [
   'Unique',
 ];
 
-export const makeRandomItem = (): item => {
+export const makeRandomItem = (): Item => {
   return {
     uid: uuidv4(),
     name: names[Math.floor(Math.random() * names.length)],

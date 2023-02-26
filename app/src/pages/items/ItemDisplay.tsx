@@ -7,15 +7,15 @@ import { ItemMagicCheckbox } from './inputs/ItemMagicCheckbox';
 import { ItemRaritySelect } from './inputs/ItemRaritySelect';
 import { ItemStockRangeInput } from './inputs/ItemStockRangeInput';
 import { ItemValueInput } from './inputs/ItemValueInput';
-import { item } from './item';
+import { Item } from './item';
 
 const ItemDisplayContainer = styled.div``;
 
 const ItemSaveButton = styled.button``;
 
 export const ItemDisplay: React.FC<{
-  item: item | undefined;
-  saveItem: (item: item) => void;
+  item: Item | undefined;
+  saveItem: (item: Item) => void;
 }> = ({ item, saveItem }) => {
   const [name, setName] = React.useState(item?.name ?? '');
   const [value, setValue] = React.useState(item?.value ?? 0);
