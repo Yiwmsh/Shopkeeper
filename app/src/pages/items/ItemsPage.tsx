@@ -19,11 +19,25 @@ export const ItemsPage: React.FC = () => {
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
   useEffect(() => {
+    const loadItems = async () => {
+      console.log('Loading');
+      ipcRenderer.invoke('loadItems', {}).then((result: any) => {
+        try {
+          const loadedItems = result as Item[];
+          setItems(loadedItems);
+        } catch (e) {
+          console.log(e);
+        }
+      });
+    };
+
     const templateItems: Item[] = [];
     for (let i = 0; i < 10; i++) {
       templateItems.push(makeRandomItem());
     }
     setItems(templateItems);
+
+    loadItems();
   }, []);
 
   const saveItem = (item: Item) => {
