@@ -5,9 +5,10 @@ export interface Item {
   value: number;
   weight: number;
   description: string;
-  rarity: string;
   magic: boolean;
+  rarity: string;
   tags?: string[];
+  consumable: boolean;
   stockRange: {
     low: number;
     high: number;
@@ -57,6 +58,7 @@ export const makeRandomItem = (): Item => {
     rarity: rarities[Math.floor(Math.random() * rarities.length)],
     magic: Math.random() > 0.5 ? true : false,
     tags: [],
+    consumable: false,
     stockRange: {
       low: Math.random() * 10,
       high: Math.random() * 50,

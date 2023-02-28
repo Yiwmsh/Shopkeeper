@@ -1,11 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
-import {
-  combineCurrency,
-  exchangeCopper,
-  exchangeGold,
-  exchangeSilver,
-} from '../../../functions/currencyFunctions';
+import { exchangeGold } from '../../../functions/currencyFunctions';
 
 const ValueField = styled.input`
   width: 50px;
@@ -53,8 +48,11 @@ export const ItemValueInput: React.FC<{
           value={gold}
           onChange={(e) => setGold(Number(e.target.value))}
           onBlur={(event) => {
-            const target = Number(event.target.value)
-            onChange(target + (silver / 10) + (copper / 100))
+            const target = Number(event.target.value);
+            onChange(target + silver / 10 + copper / 100);
+          }}
+          onFocus={(e) => {
+            e.target.select();
           }}
         />
         <ValueLabel htmlFor="gold">Gold</ValueLabel>
@@ -67,8 +65,11 @@ export const ItemValueInput: React.FC<{
           value={silver}
           onChange={(e) => setSilver(Number(e.target.value))}
           onBlur={(event) => {
-            const target = Number(event.target.value)
-            onChange(gold + (target / 10) + (copper / 100))
+            const target = Number(event.target.value);
+            onChange(gold + target / 10 + copper / 100);
+          }}
+          onFocus={(e) => {
+            e.target.select();
           }}
         />
         <ValueLabel htmlFor="silver">Silver</ValueLabel>
@@ -81,11 +82,14 @@ export const ItemValueInput: React.FC<{
           value={copper}
           onChange={(e) => setCopper(Number(e.target.value))}
           onBlur={(event) => {
-            const target = Number(event.target.value)
-            onChange(gold + (silver / 10) + (target / 100))
+            const target = Number(event.target.value);
+            onChange(gold + silver / 10 + target / 100);
+          }}
+          onFocus={(e) => {
+            e.target.select();
           }}
         />
-        <ValueLabel>Copper</ValueLabel>
+        <ValueLabel htmlFor="copper">Copper</ValueLabel>
       </ValueInputSubdivision>
     </ValueInputContainer>
   );

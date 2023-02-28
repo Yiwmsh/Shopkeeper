@@ -7,12 +7,12 @@ import { Item } from './item';
 const ItemRow = styled.div`
   display: flex;
   flex-direction: row;
+  min-width: 100%;
 `;
 const ListItemButton = styled(motion.button)`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  min-width: 100%;
   gap: 10px;
   padding: 0;
   border: none;
@@ -39,6 +39,7 @@ const DeleteItemButton = styled(motion.button)`
   color: var(${SemanticColors.altText});
   border: none;
   height: 2em;
+  padding: 5px 10px;
 `;
 
 export const ListItem: React.FC<{

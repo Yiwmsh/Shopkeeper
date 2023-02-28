@@ -12,9 +12,17 @@ const ItemsContainer = styled.div`
   justify-content: space-evenly;
 `;
 
+const ItemsListRow = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
 const ItemsList = styled.div`
   display: flex;
   flex-direction: column;
+  overflow-y: auto;
+  overflow-x: hidden;
+  max-height: 70vh;
 `;
 
 const NewItemButton = styled(motion.button)`
@@ -93,7 +101,7 @@ export const ItemsPage: React.FC = () => {
         deleteItem={deleteItem}
       />
 
-      <ItemsList>
+      <ItemsListRow>
         <NewItemButton
           onClick={() => {
             setSelectedItem(undefined);
@@ -107,16 +115,18 @@ export const ItemsPage: React.FC = () => {
         >
           +{' '}
         </NewItemButton>
-        {items.map((item) => (
-          <ListItem
-            key={item.uid}
-            isSelected={selectedItem?.uid === item.uid}
-            item={item}
-            onSelect={(item: Item) => setSelectedItem(item)}
-            onDelete={deleteItem}
-          />
-        ))}
-      </ItemsList>
+        <ItemsList>
+          {items.map((item) => (
+            <ListItem
+              key={item.uid}
+              isSelected={selectedItem?.uid === item.uid}
+              item={item}
+              onSelect={(item: Item) => setSelectedItem(item)}
+              onDelete={deleteItem}
+            />
+          ))}
+        </ItemsList>
+      </ItemsListRow>
     </ItemsContainer>
   );
 };

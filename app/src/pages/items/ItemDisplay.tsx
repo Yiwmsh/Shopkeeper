@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { ItemConsumableCheckbox } from './inputs/ItemConsumableCheckbox';
 import { ItemDescriptionInput } from './inputs/ItemDescriptionInput';
 import { ItemDisplayInput } from './inputs/ItemDisplayInput';
 import { ItemMagicCheckbox } from './inputs/ItemMagicCheckbox';
@@ -38,6 +39,7 @@ export const ItemDisplay: React.FC<{
   const [rarity, setRarity] = React.useState(item?.rarity ?? 'common');
   const [magic, setMagic] = React.useState(item?.magic ?? false);
   const [tags, setTags] = React.useState<string[]>(item?.tags ?? []);
+  const [consumable, setConsumable] = React.useState(item?.consumable ?? false);
   const [stockLowEnd, setStockLowEnd] = React.useState(
     item?.stockRange.low ?? 0
   );
@@ -57,6 +59,7 @@ export const ItemDisplay: React.FC<{
     setRarity(item?.rarity ?? 'common');
     setMagic(item?.magic ?? false);
     setTags(item?.tags ?? []);
+    setConsumable(item?.consumable ?? false);
     setStockLowEnd(item?.stockRange.low ?? 0);
     setStockHighEnd(item?.stockRange.high ?? 10);
   }, [item]);
@@ -91,6 +94,7 @@ export const ItemDisplay: React.FC<{
       />
       <ItemRaritySelect value={rarity} onChange={setRarity} />
       <ItemMagicCheckbox value={magic} onChange={setMagic} />
+      <ItemConsumableCheckbox value={consumable} onChange={setConsumable} />
       <ItemDisplayInput
         label="Tags"
         value={tags.join(', ')}
@@ -114,6 +118,7 @@ export const ItemDisplay: React.FC<{
               rarity: rarity,
               magic: magic,
               tags: tags,
+              consumable: consumable,
               stockRange: {
                 low: stockLowEnd,
                 high: stockHighEnd,
