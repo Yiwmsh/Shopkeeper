@@ -7,8 +7,8 @@ require('./itemHandler.js');
 function createMainWindow() {
   const mainWindow = new BrowserWindow({
     title: 'Electron Shell',
-    width: 1000,
-    height: 600,
+    width: 1100,
+    height: 700,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: true,
