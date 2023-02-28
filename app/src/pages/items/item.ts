@@ -14,6 +14,20 @@ export interface Item {
     high: number;
   };
 }
+export interface MagicItem extends Item {
+  rarity: string;
+}
+export interface Armor extends Item {
+  AC: number;
+  stealthDisadvantage: boolean;
+  minStrength?: number;
+}
+export interface Weapon extends Item {
+  damage: {
+    dice: string;
+    average: number;
+  };
+}
 
 const names = [
   'A mummified goblin hand',
