@@ -1,4 +1,6 @@
+import { ButtonBank, SemanticColors } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { ItemDescriptionInput } from './inputs/ItemDescriptionInput';
@@ -11,12 +13,24 @@ import { Item } from './item';
 
 const ItemDisplayContainer = styled.div``;
 
-const ItemSaveButton = styled.button``;
+const SaveButton = styled(motion.button)`
+  background-color: var(${SemanticColors.secondary});
+  color: var(${SemanticColors.altText});
+  border: none;
+  padding: 5px 10px;
+`;
+const DeleteButton = styled(motion.button)`
+  background-color: var(${SemanticColors.error});
+  color: var(${SemanticColors.altText});
+  border: none;
+  padding: 5px 10px;
+`;
 
 export const ItemDisplay: React.FC<{
   item: Item | undefined;
   saveItem: (item: Item) => void;
-}> = ({ item, saveItem }) => {
+  deleteItem: (itemID: string) => void;
+}> = ({ item, saveItem, deleteItem }) => {
   const [name, setName] = React.useState(item?.name ?? '');
   const [value, setValue] = React.useState(item?.value ?? 0);
   const [weight, setWeight] = React.useState(item?.weight ?? 0);
@@ -88,26 +102,37 @@ export const ItemDisplay: React.FC<{
         highValue={stockHighEnd}
         highValueChange={setStockHighEnd}
       />
-      <ItemSaveButton
-        onClick={() =>
-          saveItem({
-            uid: item?.uid ?? uuidv4(),
-            name: name,
-            value: value,
-            weight: weight,
-            description: description,
-            rarity: rarity,
-            magic: magic,
-            tags: tags,
-            stockRange: {
-              low: stockLowEnd,
-              high: stockHighEnd,
-            },
-          })
-        }
-      >
-        Save
-      </ItemSaveButton>
+      <ButtonBank>
+        <SaveButton
+          onClick={() =>
+            saveItem({
+              uid: item?.uid ?? uuidv4(),
+              name: name,
+              value: value,
+              weight: weight,
+              description: description,
+              rarity: rarity,
+              magic: magic,
+              tags: tags,
+              stockRange: {
+                low: stockLowEnd,
+                high: stockHighEnd,
+              },
+            })
+          }
+        >
+          Save
+        </SaveButton>
+        <DeleteButton
+          onClick={() => {
+            if (item) {
+              deleteItem(item.uid);
+            }
+          }}
+        >
+          Delete Item
+        </DeleteButton>
+      </ButtonBank>
     </ItemDisplayContainer>
   );
 };

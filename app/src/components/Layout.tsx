@@ -1,12 +1,15 @@
+import { SemanticColors } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { Outlet, useNavigate } from 'react-router-dom';
+import React from 'react';
+import { Outlet, useLocation, useNavigate } from 'react-router-dom';
 
 const Navbar = styled.nav`
   width: 100vw;
   position: sticky;
   top: 0;
   left: 0;
+  margin-bottom: 10px;
 `;
 
 const Navlist = styled.ul`
@@ -22,7 +25,7 @@ const NavItem = styled(motion.li)`
   font-size: 2em;
   display: inline-block;
   flex: 1;
-  border: 1px solid #5c6976;
+  border: 1px solid var(${SemanticColors.text});
   line-height: 2em;
 `;
 
@@ -30,13 +33,35 @@ const NavElement: React.FC<{ title: string; link: string }> = ({
   title,
   link,
 }) => {
+  const location = useLocation();
+  const [isActive, setIsActive] = React.useState(false);
   const navigate = useNavigate();
+
+  React.useEffect(() => {
+    setIsActive(location.pathname === link);
+  }, [location]);
+
   return (
     <NavItem
       onClick={() => navigate(link)}
-      initial={{ backgroundColor: '#708090' }}
-      whileHover={{ backgroundColor: '#5C6976' }}
-      whileTap={{ backgroundColor: '#8A97A4' }}
+      initial={{ backgroundColor: `var(${SemanticColors.background})` }}
+      animate={{
+        backgroundColor: isActive
+          ? `var(${SemanticColors.primary})`
+          : `var(${SemanticColors.background})`,
+
+        color: isActive
+          ? `var(${SemanticColors.altText})`
+          : `var(${SemanticColors.text})`,
+      }}
+      whileHover={{
+        backgroundColor: `var(${SemanticColors.primaryActive})`,
+        color: `var(${SemanticColors.altText})`,
+      }}
+      whileTap={{
+        backgroundColor: `var(${SemanticColors.primaryDisabled})`,
+        color: `var(${SemanticColors.altText})`,
+      }}
     >
       {title}
     </NavItem>

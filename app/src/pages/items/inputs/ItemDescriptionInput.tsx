@@ -10,7 +10,7 @@ const DescriptionLabel = styled.label``;
 
 const DescriptionField = styled.textarea`
   resize: both;
-  width: 750px;
+  width: 440px;
   height: 250px;
 `;
 

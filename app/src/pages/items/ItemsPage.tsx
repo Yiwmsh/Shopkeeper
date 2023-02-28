@@ -1,8 +1,10 @@
+import { SemanticColors } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
+import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { ItemDisplay } from './ItemDisplay';
 import { ListItem } from './ListItem';
-import { Item, makeRandomItem } from './item';
+import { Item } from './item';
 
 const ItemsContainer = styled.div`
   display: flex;
@@ -10,19 +12,33 @@ const ItemsContainer = styled.div`
   justify-content: space-evenly;
 `;
 
-const ItemsList = styled.div``;
+const ItemsList = styled.div`
+  display: flex;
+  flex-direction: column;
+`;
+
+const NewItemButton = styled(motion.button)`
+  margin: 10px auto;
+  padding: 5px 10px;
+  color: white;
+  font-size: 20px;
+  background-color: var(${SemanticColors.secondary});
+  border: none;
+`;
 
 export const ItemsPage: React.FC = () => {
   const ipcRenderer = (window as any).ipcRenderer;
+  const [itemsLoaded, setItemsLoaded] = React.useState(false);
   const [items, setItems] = React.useState<Item[]>([]);
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>();
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
   useEffect(() => {
     const loadItems = async () => {
-      console.log('Loading');
+      console.log('Loading.');
       ipcRenderer.invoke('loadItems', {}).then((result: any) => {
         try {
+          console.log(`result: ${result}`);
           const loadedItems = result as Item[];
           setItems(loadedItems);
         } catch (e) {
@@ -31,38 +47,73 @@ export const ItemsPage: React.FC = () => {
       });
     };
 
-    const templateItems: Item[] = [];
-    for (let i = 0; i < 10; i++) {
-      templateItems.push(makeRandomItem());
+    if (!itemsLoaded) {
+      loadItems();
+      setItemsLoaded(true);
     }
-    setItems(templateItems);
-
-    loadItems();
   }, []);
 
   const saveItem = (item: Item) => {
+    let newItems = [];
     const matchingItem = items.filter((arrItem) => arrItem.uid === item.uid);
     if (matchingItem.length < 1) {
-      setItems([item, ...items]);
+      newItems = [item, ...items];
     } else {
       const otherItems = items.filter((arrItem) => arrItem.uid !== item.uid);
-      setItems([item, ...otherItems]);
+      newItems = [item, ...otherItems];
     }
-    setIsSaving(true);
     ipcRenderer.send('saveItems', {
-      items: items,
+      items: newItems,
     });
+
+    setItems(newItems);
+  };
+
+  const deleteItem = (itemID: string) => {
+    const matchingItem = items.filter((arrItem) => arrItem.uid === itemID);
+    console.log(matchingItem.length);
+    if (matchingItem.length === 1) {
+      const otherItems = items.filter((arrItem) => arrItem.uid !== itemID);
+
+      const newItems = [...otherItems];
+
+      ipcRenderer.send('saveItems', {
+        items: newItems,
+      });
+
+      setItems(newItems);
+    }
   };
 
   return (
     <ItemsContainer>
-      <ItemDisplay item={selectedItem} saveItem={saveItem} />
+      <ItemDisplay
+        item={selectedItem}
+        saveItem={saveItem}
+        deleteItem={deleteItem}
+      />
+
       <ItemsList>
+        <NewItemButton
+          onClick={() => {
+            setSelectedItem(undefined);
+          }}
+          whileHover={{
+            backgroundColor: `var(${SemanticColors.secondaryActive})`,
+          }}
+          whileTap={{
+            backgroundColor: `var(${SemanticColors.secondaryDisabled})`,
+          }}
+        >
+          +{' '}
+        </NewItemButton>
         {items.map((item) => (
           <ListItem
             key={item.uid}
+            isSelected={selectedItem?.uid === item.uid}
             item={item}
-            onClick={(item: Item) => setSelectedItem(item)}
+            onSelect={(item: Item) => setSelectedItem(item)}
+            onDelete={deleteItem}
           />
         ))}
       </ItemsList>

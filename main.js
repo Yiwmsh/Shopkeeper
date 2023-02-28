@@ -2,6 +2,7 @@ const { app, BrowserWindow } = require('electron');
 const url = require('url');
 const path = require('path');
 const isDev = require('electron-is-dev');
+require('./itemHandler.js');
 
 function createMainWindow() {
   const mainWindow = new BrowserWindow({
