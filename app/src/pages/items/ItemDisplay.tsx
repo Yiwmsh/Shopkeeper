@@ -32,6 +32,7 @@ export const ItemDisplay: React.FC<{
   saveItem: (item: Item) => void;
   deleteItem: (itemID: string) => void;
 }> = ({ item, saveItem, deleteItem }) => {
+  const [source, setSource] = React.useState(item?.source ?? 'Core');
   const [name, setName] = React.useState(item?.name ?? '');
   const [value, setValue] = React.useState(item?.value ?? 0);
   const [weight, setWeight] = React.useState(item?.weight ?? 0);
@@ -52,6 +53,7 @@ export const ItemDisplay: React.FC<{
   };
 
   useEffect(() => {
+    setSource(item?.source ?? 'Core');
     setName(item?.name ?? '');
     setValue(item?.value ?? 0);
     setWeight(item?.weight ?? 0);
@@ -92,6 +94,7 @@ export const ItemDisplay: React.FC<{
         value={description}
         onChange={setDescription}
       />
+      <ItemDisplayInput label="Source" value={source} onChange={setSource} />
       <ItemRaritySelect value={rarity} onChange={setRarity} />
       <ItemMagicCheckbox value={magic} onChange={setMagic} />
       <ItemConsumableCheckbox value={consumable} onChange={setConsumable} />
@@ -113,6 +116,7 @@ export const ItemDisplay: React.FC<{
               uid: item?.uid ?? uuidv4(),
               name: name,
               value: value,
+              source: source,
               weight: weight,
               description: description,
               rarity: rarity,
