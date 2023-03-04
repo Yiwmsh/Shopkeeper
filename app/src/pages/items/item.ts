@@ -17,6 +17,7 @@ export interface Item {
 }
 export interface MagicItem extends Item {
   rarity: string;
+  requiresAttunement: boolean;
 }
 export interface Armor extends Item {
   AC: number;
