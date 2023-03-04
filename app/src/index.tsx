@@ -7,6 +7,7 @@ import { Page } from './components/Page';
 import { LightTheme } from './consts/themes';
 import './index.css';
 import { ItemsPage } from './pages/items/ItemsPage';
+import { SetsPage } from './pages/sets/SetsPage';
 import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(
@@ -20,6 +21,8 @@ root.render(
           <Routes>
             <Route path="/" element={<Layout />}>
               <Route path="/items" element={<ItemsPage />} />
+              <Route path="/sets" element={<SetsPage />} />
+              <Route path="/stores" element={<></>} />
             </Route>
           </Routes>
         </BrowserRouter>

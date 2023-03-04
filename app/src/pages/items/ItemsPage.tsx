@@ -12,7 +12,7 @@ const ItemsContainer = styled.div`
   justify-content: space-evenly;
 `;
 
-const ItemsListRow = styled.div`
+const ItemsListCol = styled.div`
   display: flex;
   flex-direction: column;
 `;
@@ -101,7 +101,7 @@ export const ItemsPage: React.FC = () => {
         deleteItem={deleteItem}
       />
 
-      <ItemsListRow>
+      <ItemsListCol>
         <NewItemButton
           onClick={() => {
             setSelectedItem(undefined);
@@ -126,7 +126,7 @@ export const ItemsPage: React.FC = () => {
             />
           ))}
         </ItemsList>
-      </ItemsListRow>
+      </ItemsListCol>
     </ItemsContainer>
   );
 };
