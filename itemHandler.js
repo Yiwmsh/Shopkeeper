@@ -1,7 +1,6 @@
 const { ipcMain } = require('electron/main');
 const fs = require('fs');
 
-// const itemSavePath = 'C:/Program Files/Shopkeeper/assets/items.txt';
 const itemSavePath = './assets/items.txt';
 
 ipcMain.on('saveItems', async (e, opt) => {

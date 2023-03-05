@@ -129,6 +129,12 @@ export const ItemDisplay: React.FC<{
               },
             })
           }
+          whileHover={{
+            backgroundColor: `var(${SemanticColors.secondaryActive})`,
+          }}
+          whileTap={{
+            backgroundColor: `var(${SemanticColors.secondaryDisabled})`,
+          }}
         >
           Save
         </SaveButton>
@@ -137,6 +143,9 @@ export const ItemDisplay: React.FC<{
             if (item) {
               deleteItem(item.uid);
             }
+          }}
+          whileHover={{
+            filter: `contrast(2)`,
           }}
         >
           Delete Item

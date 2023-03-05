@@ -46,7 +46,6 @@ export const ItemsPage: React.FC = () => {
       console.log('Loading.');
       ipcRenderer.invoke('loadItems', {}).then((result: any) => {
         try {
-          console.log(`result: ${result}`);
           const loadedItems = result as Item[];
           setItems(loadedItems);
         } catch (e) {
@@ -79,7 +78,6 @@ export const ItemsPage: React.FC = () => {
 
   const deleteItem = (itemID: string) => {
     const matchingItem = items.filter((arrItem) => arrItem.uid === itemID);
-    console.log(matchingItem.length);
     if (matchingItem.length === 1) {
       const otherItems = items.filter((arrItem) => arrItem.uid !== itemID);
 
