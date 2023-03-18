@@ -1,7 +1,7 @@
 import { SemanticColors } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import React, { useEffect } from 'react';
+import React from 'react';
 import { ItemDisplay } from './ItemDisplay';
 import { ListItem } from './ListItem';
 import { Item } from './item';
@@ -41,24 +41,24 @@ export const ItemsPage: React.FC = () => {
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>();
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
 
-  useEffect(() => {
-    const loadItems = async () => {
-      console.log('Loading.');
-      ipcRenderer.invoke('loadItems', {}).then((result: any) => {
-        try {
-          const loadedItems = result as Item[];
+  const loadItems = async () => {
+    console.log('Loading.');
+    ipcRenderer.invoke('loadItems', {}).then((result: any) => {
+      try {
+        const loadedItems = result as Item[];
+        if (typeof loadedItems !== 'undefined') {
           setItems(loadedItems);
-        } catch (e) {
-          console.log(e);
+          setItemsLoaded(true);
         }
-      });
-    };
+      } catch (e) {
+        console.log(e);
+      }
+    });
+  };
 
-    if (!itemsLoaded) {
-      loadItems();
-      setItemsLoaded(true);
-    }
-  }, []);
+  if (!itemsLoaded) {
+    loadItems();
+  }
 
   const saveItem = (item: Item) => {
     let newItems = [];
