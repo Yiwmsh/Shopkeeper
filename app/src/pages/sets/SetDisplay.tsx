@@ -1,26 +1,13 @@
-import { ButtonBank, SemanticColors } from '@chrisellis/react-carpentry';
+import { ButtonBank } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from '../../consts/inputs/Button';
 import { ItemDescriptionInput } from '../items/inputs/ItemDescriptionInput';
 import { ItemDisplayInput } from '../items/inputs/ItemDisplayInput';
 import { ItemSet } from './itemSet';
 
 const SetDisplayContainer = styled.div``;
-
-const SaveButton = styled(motion.button)`
-  background-color: var(${SemanticColors.secondary});
-  color: var(${SemanticColors.altText});
-  border: none;
-  padding: 5px 10px;
-`;
-const DeleteButton = styled(motion.button)`
-  background-color: var(${SemanticColors.error});
-  color: var(${SemanticColors.altText});
-  border: none;
-  padding: 5px 10px;
-`;
 
 export const SetDisplay: React.FC<{
   set: ItemSet | undefined;
@@ -47,7 +34,7 @@ export const SetDisplay: React.FC<{
         onChange={setDescription}
       />
       <ButtonBank>
-        <SaveButton
+        <Button
           onClick={() =>
             saveSet({
               uid: set?.uid ?? uuidv4(),
@@ -56,21 +43,20 @@ export const SetDisplay: React.FC<{
               itemIDs: itemIDs,
             })
           }
+          buttonType="constructive"
         >
           Save
-        </SaveButton>
-        <DeleteButton
+        </Button>
+        <Button
           onClick={() => {
             if (set) {
               deleteSet(set.uid);
             }
           }}
-          whileHover={{
-            filter: `contrast(2)`,
-          }}
+          buttonType="destructive"
         >
           Delete Set
-        </DeleteButton>
+        </Button>
       </ButtonBank>
     </SetDisplayContainer>
   );

@@ -1,6 +1,8 @@
 import { SemanticColors } from '@chrisellis/react-carpentry';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
+import { Button } from '../../consts/inputs/Button';
 import { displayValue } from '../../functions/currencyFunctions';
 import { Item } from './item';
 
@@ -32,14 +34,6 @@ const ListItemPrice = styled.div`
   height: 2em;
   line-height: 2em;
   overflow: hidden;
-`;
-
-const DeleteItemButton = styled(motion.button)`
-  background-color: var(${SemanticColors.error});
-  color: var(${SemanticColors.altText});
-  border: none;
-  height: 2em;
-  padding: 5px 10px;
 `;
 
 export const ListItem: React.FC<{
@@ -77,16 +71,18 @@ export const ListItem: React.FC<{
         <ListItemName>{item.name}</ListItemName>
         <ListItemPrice>{displayValue(item.value)}</ListItemPrice>
       </ListItemButton>
-      <DeleteItemButton
+      <Button
         onClick={() => {
           onDelete(item.uid);
         }}
-        whileHover={{
-          filter: `contrast(2)`,
-        }}
+        buttonType="destructive"
+        styles={css`
+          height: 2em;
+          padding: 5px 10px;
+        `}
       >
         x
-      </DeleteItemButton>
+      </Button>
     </ItemRow>
   );
 };

@@ -1,8 +1,8 @@
-import { ButtonBank, SemanticColors } from '@chrisellis/react-carpentry';
+import { ButtonBank } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
+import { Button } from '../../consts/inputs/Button';
 import { ItemConsumableCheckbox } from './inputs/ItemConsumableCheckbox';
 import { ItemDescriptionInput } from './inputs/ItemDescriptionInput';
 import { ItemDisplayInput } from './inputs/ItemDisplayInput';
@@ -13,19 +13,6 @@ import { ItemValueInput } from './inputs/ItemValueInput';
 import { Item } from './item';
 
 const ItemDisplayContainer = styled.div``;
-
-const SaveButton = styled(motion.button)`
-  background-color: var(${SemanticColors.secondary});
-  color: var(${SemanticColors.altText});
-  border: none;
-  padding: 5px 10px;
-`;
-const DeleteButton = styled(motion.button)`
-  background-color: var(${SemanticColors.error});
-  color: var(${SemanticColors.altText});
-  border: none;
-  padding: 5px 10px;
-`;
 
 export const ItemDisplay: React.FC<{
   item: Item | undefined;
@@ -110,7 +97,7 @@ export const ItemDisplay: React.FC<{
         highValueChange={setStockHighEnd}
       />
       <ButtonBank>
-        <SaveButton
+        <Button
           onClick={() =>
             saveItem({
               uid: item?.uid ?? uuidv4(),
@@ -129,27 +116,20 @@ export const ItemDisplay: React.FC<{
               },
             })
           }
-          whileHover={{
-            backgroundColor: `var(${SemanticColors.secondaryActive})`,
-          }}
-          whileTap={{
-            backgroundColor: `var(${SemanticColors.secondaryDisabled})`,
-          }}
+          buttonType="constructive"
         >
           Save
-        </SaveButton>
-        <DeleteButton
+        </Button>
+        <Button
           onClick={() => {
             if (item) {
               deleteItem(item.uid);
             }
           }}
-          whileHover={{
-            filter: `contrast(2)`,
-          }}
+          buttonType="destructive"
         >
           Delete Item
-        </DeleteButton>
+        </Button>
       </ButtonBank>
     </ItemDisplayContainer>
   );

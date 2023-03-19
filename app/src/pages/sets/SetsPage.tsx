@@ -1,7 +1,7 @@
-import { SemanticColors } from '@chrisellis/react-carpentry';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import React from 'react';
+import { Button } from '../../consts/inputs/Button';
 import { ListSet } from './ListSet';
 import { SetDisplay } from './SetDisplay';
 import { ItemSet } from './itemSet';
@@ -23,15 +23,6 @@ const SetList = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 70vh;
-`;
-
-const NewSetButton = styled(motion.button)`
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: white;
-  font-size: 20px;
-  background-color: var(${SemanticColors.secondary});
-  border: none;
 `;
 
 export const SetsPage: React.FC = () => {
@@ -98,19 +89,19 @@ export const SetsPage: React.FC = () => {
     <SetsPageContainer>
       <SetDisplay set={selectedSet} saveSet={saveSet} deleteSet={deleteSet} />
       <SetListCol>
-        <NewSetButton
+        <Button
           onClick={() => {
             setSelectedSet(undefined);
           }}
-          whileHover={{
-            backgroundColor: `var(${SemanticColors.secondaryActive})`,
-          }}
-          whileTap={{
-            backgroundColor: `var(${SemanticColors.secondaryDisabled})`,
-          }}
+          buttonType="constructive"
+          styles={css`
+            margin: 10px auto;
+            padding: 5px 10px;
+            font-size: 20px;
+          `}
         >
           +{' '}
-        </NewSetButton>
+        </Button>
         <SetList>
           {setsLoaded ? sets.map((set) => <ListSet set={set} />) : ''}
         </SetList>

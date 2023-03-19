@@ -1,7 +1,7 @@
-import { SemanticColors } from '@chrisellis/react-carpentry';
+import { css } from '@emotion/react';
 import styled from '@emotion/styled';
-import { motion } from 'framer-motion';
 import React from 'react';
+import { Button } from '../../consts/inputs/Button';
 import { ItemDisplay } from './ItemDisplay';
 import { ListItem } from './ListItem';
 import { Item } from './item';
@@ -23,15 +23,6 @@ const ItemsList = styled.div`
   overflow-y: auto;
   overflow-x: hidden;
   max-height: 70vh;
-`;
-
-const NewItemButton = styled(motion.button)`
-  margin: 10px auto;
-  padding: 5px 10px;
-  color: white;
-  font-size: 20px;
-  background-color: var(${SemanticColors.secondary});
-  border: none;
 `;
 
 export const ItemsPage: React.FC = () => {
@@ -100,19 +91,19 @@ export const ItemsPage: React.FC = () => {
       />
 
       <ItemsListCol>
-        <NewItemButton
+        <Button
           onClick={() => {
             setSelectedItem(undefined);
           }}
-          whileHover={{
-            backgroundColor: `var(${SemanticColors.secondaryActive})`,
-          }}
-          whileTap={{
-            backgroundColor: `var(${SemanticColors.secondaryDisabled})`,
-          }}
+          buttonType="constructive"
+          styles={css`
+            margin: 10px auto;
+            padding: 5px 10px;
+            font-size: 20px;
+          `}
         >
           +{' '}
-        </NewItemButton>
+        </Button>
         <ItemsList>
           {items.map((item) => (
             <ListItem
