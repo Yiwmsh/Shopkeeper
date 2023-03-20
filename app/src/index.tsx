@@ -8,7 +8,7 @@ import { Page } from './components/Page';
 import { LightTheme } from './consts/themes';
 import './index.css';
 import { ItemLoader } from './pages/items/ItemLoader';
-import { SetsPage } from './pages/sets/SetsPage';
+import { SetsLoader } from './pages/sets/SetsLoader';
 import reportWebVitals from './reportWebVitals';
 
 const queryClient = new QueryClient();
@@ -25,7 +25,7 @@ root.render(
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route path="/items" element={<ItemLoader />} />
-                <Route path="/sets" element={<SetsPage />} />
+                <Route path="/sets" element={<SetsLoader />} />
                 <Route path="/stores" element={<></>} />
               </Route>
             </Routes>

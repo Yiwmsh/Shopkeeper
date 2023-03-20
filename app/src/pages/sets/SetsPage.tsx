@@ -25,33 +25,16 @@ const SetList = styled.div`
   max-height: 70vh;
 `;
 
-export const SetsPage: React.FC = () => {
+export const SetsPage: React.FC<{ loadedSets: ItemSet[] }> = ({
+  loadedSets,
+}) => {
   const [itemKeys, setItemKeys] = React.useState<
     { name: string; uid: string }[]
   >([]);
   const ipcRenderer = (window as any).ipcRenderer;
-  const [sets, setSets] = React.useState<ItemSet[]>([]);
-  const [setsLoaded, setSetsLoaded] = React.useState(false);
+  const [sets, setSets] = React.useState<ItemSet[]>(loadedSets);
   const [selectedSet, setSelectedSet] = React.useState<ItemSet | undefined>();
   const [isSaving, setIsSaving] = React.useState(false);
-
-  const loadSets = async () => {
-    ipcRenderer.invoke('loadSets', {}).then((result: any) => {
-      try {
-        const loadedSets = result as ItemSet[];
-        if (typeof loadedSets !== 'undefined') {
-          setSets(loadedSets);
-          setSetsLoaded(true);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    });
-  };
-
-  if (!setsLoaded) {
-    loadSets();
-  }
 
   const saveSet = (set: ItemSet) => {
     let newSets = [];
@@ -103,18 +86,16 @@ export const SetsPage: React.FC = () => {
           +{' '}
         </Button>
         <SetList>
-          {setsLoaded
-            ? sets.map((set) => (
-                <SelectableListEntry
-                  onSelect={() => setSelectedSet(set)}
-                  onDelete={() => {
-                    deleteSet(set.uid);
-                  }}
-                >
-                  <div>{set.name}</div>
-                </SelectableListEntry>
-              ))
-            : ''}
+          {sets.map((set) => (
+            <SelectableListEntry
+              onSelect={() => setSelectedSet(set)}
+              onDelete={() => {
+                deleteSet(set.uid);
+              }}
+            >
+              <div>{set.name}</div>
+            </SelectableListEntry>
+          ))}
         </SetList>
       </SetListCol>
     </SetsPageContainer>
