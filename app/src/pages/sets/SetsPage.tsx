@@ -1,7 +1,7 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
-import { Button } from '../../consts/inputs/Button';
+import { Button } from '../../components/inputs/Button';
 import { ListSet } from './ListSet';
 import { SetDisplay } from './SetDisplay';
 import { ItemSet } from './itemSet';

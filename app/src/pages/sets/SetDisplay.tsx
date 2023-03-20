@@ -2,7 +2,7 @@ import { ButtonBank } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Button } from '../../consts/inputs/Button';
+import { Button } from '../../components/inputs/Button';
 import { ItemDescriptionInput } from '../items/inputs/ItemDescriptionInput';
 import { ItemDisplayInput } from '../items/inputs/ItemDisplayInput';
 import { ItemSet } from './itemSet';

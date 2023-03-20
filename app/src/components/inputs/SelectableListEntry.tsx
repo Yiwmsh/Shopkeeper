@@ -2,15 +2,25 @@ import { SemanticColors } from '@chrisellis/react-carpentry';
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
-import { Button } from '../../consts/inputs/Button';
-import { displayValue } from '../../functions/currencyFunctions';
-import { Item } from './item';
+import React from 'react';
+import { Button } from './Button';
 
 const ItemRow = styled.div`
   display: flex;
   flex-direction: row;
   min-width: 100%;
 `;
+
+const ListItemDetails = styled.div`
+  width: 40ch;
+  height: 2em;
+  line-height: 2em;
+  overflow: hidden;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 5px;
+`;
+
 const ListItemButton = styled(motion.button)`
   display: flex;
   flex-direction: row;
@@ -22,26 +32,19 @@ const ListItemButton = styled(motion.button)`
   height: 2em;
 `;
 
-const ListItemName = styled.div`
-  width: 20ch;
-  height: 2em;
-  line-height: 2em;
-  overflow: hidden;
-`;
-
-const ListItemPrice = styled.div`
-  width: 20ch;
-  height: 2em;
-  line-height: 2em;
-  overflow: hidden;
-`;
-
-export const ListItem: React.FC<{
-  item: Item;
-  onSelect: (item: Item) => void;
-  onDelete: (itemID: string) => void;
+export interface SelectableListEntryProps {
+  onSelect: () => void;
+  onDelete: () => void;
   isSelected?: boolean;
-}> = ({ item, onSelect, onDelete, isSelected }) => {
+  children?: React.ReactNode;
+}
+
+export const SelectableListEntry: React.FC<SelectableListEntryProps> = ({
+  onSelect,
+  onDelete,
+  isSelected,
+  children,
+}) => {
   return (
     <ItemRow>
       <ListItemButton
@@ -66,14 +69,13 @@ export const ListItem: React.FC<{
           color: `var(${SemanticColors.altText})`,
         }}
         transition={{ duration: 0.2 }}
-        onClick={() => onSelect(item)}
+        onClick={() => onSelect()}
       >
-        <ListItemName>{item.name}</ListItemName>
-        <ListItemPrice>{displayValue(item.value)}</ListItemPrice>
+        <ListItemDetails> {children}</ListItemDetails>
       </ListItemButton>
       <Button
         onClick={() => {
-          onDelete(item.uid);
+          onDelete();
         }}
         buttonType="destructive"
         styles={css`

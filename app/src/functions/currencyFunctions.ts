@@ -1,10 +1,24 @@
-export const displayValue = (value: number): string => {
+export const displayValue = (
+  value: number,
+  format?: 'long' | 'short'
+): string => {
   const gold = Math.floor(value);
   const silver = Math.floor(value * 10 - gold * 10);
   const copper = Math.floor(value * 100 - gold * 100 - silver * 10);
-  return `${gold} gold${silver > 0 ? `, ${silver} silver` : ''}${
-    copper > 0 ? `, ${copper} copper` : ''
-  }`;
+
+  const valueReadouts: string[] = [];
+
+  if (gold !== 0) {
+    valueReadouts.push(`${gold}${format === 'long' ? ' gold' : 'g'}`);
+  }
+  if (silver !== 0) {
+    valueReadouts.push(`${silver}${format === 'long' ? ' silver' : 's'}`);
+  }
+  if (copper !== 0) {
+    valueReadouts.push(`${copper}${format === 'long' ? ' copper' : 'c'}`);
+  }
+
+  return valueReadouts.join(', ');
 };
 
 export const exchangeCopper = (

@@ -1,9 +1,10 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
-import { Button } from '../../consts/inputs/Button';
+import { Button } from '../../components/inputs/Button';
+import { SelectableListEntry } from '../../components/inputs/SelectableListEntry';
+import { displayValue } from '../../functions/currencyFunctions';
 import { ItemDisplay } from './ItemDisplay';
-import { ListItem } from './ListItem';
 import { Item } from './item';
 
 const ItemsContainer = styled.div`
@@ -106,13 +107,13 @@ export const ItemsPage: React.FC = () => {
         </Button>
         <ItemsList>
           {items.map((item) => (
-            <ListItem
-              key={item.uid}
-              isSelected={selectedItem?.uid === item.uid}
-              item={item}
-              onSelect={(item: Item) => setSelectedItem(item)}
-              onDelete={deleteItem}
-            />
+            <SelectableListEntry
+              onSelect={() => setSelectedItem(item)}
+              onDelete={() => deleteItem(item.uid)}
+            >
+              <div>{item.name}</div>
+              <div>{displayValue(item.value, 'long')}</div>
+            </SelectableListEntry>
           ))}
         </ItemsList>
       </ItemsListCol>
