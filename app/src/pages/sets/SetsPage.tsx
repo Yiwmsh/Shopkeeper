@@ -2,9 +2,9 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
 import { Button } from '../../components/inputs/Button';
-import { ListSet } from './ListSet';
+import { SelectableListEntry } from '../../components/inputs/SelectableListEntry';
+import { ItemSet } from '../../types/itemSet';
 import { SetDisplay } from './SetDisplay';
-import { ItemSet } from './itemSet';
 
 const SetsPageContainer = styled.div`
   display: flex;
@@ -103,7 +103,18 @@ export const SetsPage: React.FC = () => {
           +{' '}
         </Button>
         <SetList>
-          {setsLoaded ? sets.map((set) => <ListSet set={set} />) : ''}
+          {setsLoaded
+            ? sets.map((set) => (
+                <SelectableListEntry
+                  onSelect={() => setSelectedSet(set)}
+                  onDelete={() => {
+                    deleteSet(set.uid);
+                  }}
+                >
+                  <div>{set.name}</div>
+                </SelectableListEntry>
+              ))
+            : ''}
         </SetList>
       </SetListCol>
     </SetsPageContainer>

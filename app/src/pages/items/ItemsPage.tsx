@@ -4,8 +4,8 @@ import React from 'react';
 import { Button } from '../../components/inputs/Button';
 import { SelectableListEntry } from '../../components/inputs/SelectableListEntry';
 import { displayValue } from '../../functions/currencyFunctions';
+import { Item } from '../../types/item';
 import { ItemDisplay } from './ItemDisplay';
-import { Item } from './item';
 
 const ItemsContainer = styled.div`
   display: flex;
@@ -26,31 +26,13 @@ const ItemsList = styled.div`
   max-height: 70vh;
 `;
 
-export const ItemsPage: React.FC = () => {
+export const ItemsPage: React.FC<{ loadedItems: Item[] }> = ({
+  loadedItems,
+}) => {
   const ipcRenderer = (window as any).ipcRenderer;
-  const [itemsLoaded, setItemsLoaded] = React.useState(false);
-  const [items, setItems] = React.useState<Item[]>([]);
+  const [items, setItems] = React.useState<Item[]>(loadedItems);
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>();
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
-
-  const loadItems = async () => {
-    console.log('Loading.');
-    ipcRenderer.invoke('loadItems', {}).then((result: any) => {
-      try {
-        const loadedItems = result as Item[];
-        if (typeof loadedItems !== 'undefined') {
-          setItems(loadedItems);
-          setItemsLoaded(true);
-        }
-      } catch (e) {
-        console.log(e);
-      }
-    });
-  };
-
-  if (!itemsLoaded) {
-    loadItems();
-  }
 
   const saveItem = (item: Item) => {
     let newItems = [];
@@ -106,10 +88,11 @@ export const ItemsPage: React.FC = () => {
           +{' '}
         </Button>
         <ItemsList>
-          {items.map((item) => (
+          {loadedItems.map((item) => (
             <SelectableListEntry
               onSelect={() => setSelectedItem(item)}
               onDelete={() => deleteItem(item.uid)}
+              isSelected={selectedItem === item}
             >
               <div>{item.name}</div>
               <div>{displayValue(item.value, 'long')}</div>

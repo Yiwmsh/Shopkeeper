@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from '../../components/inputs/Button';
+import { Item } from '../../types/item';
 import { ItemConsumableCheckbox } from './inputs/ItemConsumableCheckbox';
 import { ItemDescriptionInput } from './inputs/ItemDescriptionInput';
 import { ItemDisplayInput } from './inputs/ItemDisplayInput';
@@ -10,7 +11,6 @@ import { ItemMagicCheckbox } from './inputs/ItemMagicCheckbox';
 import { ItemRaritySelect } from './inputs/ItemRaritySelect';
 import { ItemStockRangeInput } from './inputs/ItemStockRangeInput';
 import { ItemValueInput } from './inputs/ItemValueInput';
-import { Item } from './item';
 
 const ItemDisplayContainer = styled.div``;
 

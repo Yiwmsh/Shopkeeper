@@ -1,4 +1,5 @@
 import { ThemeContext } from '@chrisellis/react-carpentry';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
@@ -6,28 +7,32 @@ import { Layout } from './components';
 import { Page } from './components/Page';
 import { LightTheme } from './consts/themes';
 import './index.css';
-import { ItemsPage } from './pages/items/ItemsPage';
+import { ItemLoader } from './pages/items/ItemLoader';
 import { SetsPage } from './pages/sets/SetsPage';
 import reportWebVitals from './reportWebVitals';
+
+const queryClient = new QueryClient();
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ThemeContext theme={LightTheme}>
-      <Page>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<Layout />}>
-              <Route path="/items" element={<ItemsPage />} />
-              <Route path="/sets" element={<SetsPage />} />
-              <Route path="/stores" element={<></>} />
-            </Route>
-          </Routes>
-        </BrowserRouter>
-      </Page>
-    </ThemeContext>
+    <QueryClientProvider client={queryClient}>
+      <ThemeContext theme={LightTheme}>
+        <Page>
+          <BrowserRouter>
+            <Routes>
+              <Route path="/" element={<Layout />}>
+                <Route path="/items" element={<ItemLoader />} />
+                <Route path="/sets" element={<SetsPage />} />
+                <Route path="/stores" element={<></>} />
+              </Route>
+            </Routes>
+          </BrowserRouter>
+        </Page>
+      </ThemeContext>
+    </QueryClientProvider>
   </React.StrictMode>
 );
 
