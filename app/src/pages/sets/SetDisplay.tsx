@@ -9,7 +9,11 @@ import { useItems } from '../../utils/useItems';
 import { ItemDescriptionInput } from '../items/inputs/ItemDescriptionInput';
 import { ItemDisplayInput } from '../items/inputs/ItemDisplayInput';
 
-const SetDisplayContainer = styled.div``;
+const SetDisplayContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
 
 export const SetDisplay: React.FC<{
   set: ItemSet | undefined;

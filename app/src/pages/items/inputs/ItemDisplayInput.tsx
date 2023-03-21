@@ -6,7 +6,10 @@ const ItemDisplayInputField = styled.input`
 
 const ItemDisplayInputLabel = styled.label``;
 
-const ItemDisplayInputContainer = styled.div``;
+const ItemDisplayInputContainer = styled.div`
+  display: flex;
+  gap: 5px;
+`;
 
 export interface ItemDisplayProps {
   value: string;
