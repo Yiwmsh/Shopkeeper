@@ -2,11 +2,10 @@ import { ButtonBank } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Button, MultiSelectList } from '../../components';
+import { Button, GroupAddRemove, MultiSelectList } from '../../components';
 import { ItemSet } from '../../types';
 import { useItems, useTags } from '../../utils';
 import { ItemDescriptionInput, ItemDisplayInput } from '../items';
-import { GroupAddRemove } from './inputs';
 
 const SetDisplayContainer = styled.div`
   display: flex;
