@@ -95,9 +95,12 @@ export const ItemsPage: React.FC<{ loadedItems: Item[] }> = ({
             if (
               search === '' ||
               item.name.toLowerCase().includes(search.toLowerCase()) ||
-              item.tags?.some((tag) =>
-                tag.toLowerCase().includes(search.toLowerCase())
-              )
+              search
+                .toLowerCase()
+                .split(' ')
+                .every((searchTag) =>
+                  item.tags?.some((tag) => tag.includes(searchTag))
+                )
             ) {
               return (
                 <SelectableListEntry
