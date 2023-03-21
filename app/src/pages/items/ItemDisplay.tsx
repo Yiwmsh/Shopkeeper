@@ -2,15 +2,17 @@ import { ButtonBank } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Button } from '../../components/inputs/Button';
-import { Item } from '../../types/item';
-import { ItemConsumableCheckbox } from './inputs/ItemConsumableCheckbox';
-import { ItemDescriptionInput } from './inputs/ItemDescriptionInput';
-import { ItemDisplayInput } from './inputs/ItemDisplayInput';
-import { ItemMagicCheckbox } from './inputs/ItemMagicCheckbox';
-import { ItemRaritySelect } from './inputs/ItemRaritySelect';
-import { ItemStockRangeInput } from './inputs/ItemStockRangeInput';
-import { ItemValueInput } from './inputs/ItemValueInput';
+import { Button } from '../../components';
+import { Item } from '../../types';
+import {
+  ItemConsumableCheckbox,
+  ItemDescriptionInput,
+  ItemDisplayInput,
+  ItemMagicCheckbox,
+  ItemRaritySelect,
+  ItemStockRangeInput,
+  ItemValueInput,
+} from './inputs';
 
 const ItemDisplayContainer = styled.div`
   display: flex;

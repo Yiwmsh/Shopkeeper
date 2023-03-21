@@ -1,4 +1,4 @@
-import { useSets } from '../../utils/useSets';
+import { useSets } from '../../utils';
 import { SetsPage } from './SetsPage';
 
 export const SetsLoader: React.FC = () => {

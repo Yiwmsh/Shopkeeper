@@ -1,9 +1,8 @@
 import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
-import { Button } from '../../components/inputs/Button';
-import { SelectableListEntry } from '../../components/inputs/SelectableListEntry';
-import { ItemSet } from '../../types/itemSet';
+import { Button, SelectableListEntry } from '../../components';
+import { ItemSet } from '../../types';
 import { SetDisplay } from './SetDisplay';
 
 const SetsPageContainer = styled.div`

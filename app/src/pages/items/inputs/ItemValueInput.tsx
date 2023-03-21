@@ -1,6 +1,6 @@
 import styled from '@emotion/styled';
 import React, { useEffect } from 'react';
-import { exchangeGold } from '../../../functions/currencyFunctions';
+import { exchangeGold } from '../../../functions';
 
 const ValueField = styled.input`
   width: 50px;

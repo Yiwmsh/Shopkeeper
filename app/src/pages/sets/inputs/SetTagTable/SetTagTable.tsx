@@ -1,7 +1,7 @@
 import { SemanticColors } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
 import React from 'react';
-import { useTags } from '../../../../utils/useTags';
+import { useTags } from '../../../../utils';
 import { ItemDisplayInput } from '../../../items';
 import { SetTagTableEntry } from './SetTagTableEntry';
 

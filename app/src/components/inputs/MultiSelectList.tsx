@@ -2,8 +2,8 @@ import { SemanticColors } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import React from 'react';
-import { ItemDisplayInput } from '../../pages/items/inputs/ItemDisplayInput';
-import { IdentifiableObject } from '../../types/identifiableObject';
+import { ItemDisplayInput } from '../../pages';
+import { IdentifiableObject } from '../../types';
 
 const MultiSelectListWrapper = styled.div`
   background-color: var(${SemanticColors.altText});

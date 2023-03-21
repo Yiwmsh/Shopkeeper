@@ -1,4 +1,4 @@
-import { useItems } from '../../utils/useItems';
+import { useItems } from '../../utils';
 import { ItemsPage } from './ItemsPage';
 
 export const ItemLoader: React.FC = () => {

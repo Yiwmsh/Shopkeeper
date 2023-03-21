@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { rarities } from '../../../types/item';
+import { rarities } from '../../../types';
 
 const RarityOption = styled.option``;
 
