@@ -44,7 +44,7 @@ export const GroupAddRemove: React.FC<GroupAddRemoveProps> = ({
       </Row>
       <GroupList>
         {groups.map((tag) => {
-          if (tag.includes(search)) {
+          if (tag.toLowerCase().includes(search.toLowerCase())) {
             return (
               <GroupAddRemoveEntry
                 tag={tag}

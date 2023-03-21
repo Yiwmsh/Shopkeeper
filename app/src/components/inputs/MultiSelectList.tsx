@@ -65,7 +65,10 @@ export const MultiSelectList: React.FC<MultiSelectListProps> = ({
             (selectedEntry) => selectedEntry === entry.uid
           );
           if (!selectedOnly || isSelected) {
-            if (search === '' || entry.name.includes(search)) {
+            if (
+              search === '' ||
+              entry.name.toLowerCase().includes(search.toLowerCase())
+            ) {
               return (
                 <MultiSelectListEntry
                   selected={isSelected}
