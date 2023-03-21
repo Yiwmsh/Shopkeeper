@@ -1,1 +1,1 @@
-export * from './SetTagTable';
+export * from '../../../components/inputs/GroupAddRemove.tsx/index.js';

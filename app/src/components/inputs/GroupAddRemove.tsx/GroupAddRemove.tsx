@@ -1,11 +1,10 @@
 import { SemanticColors } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
 import React from 'react';
-import { useTags } from '../../../../utils';
-import { ItemDisplayInput } from '../../../items';
-import { SetTagTableEntry } from './SetTagTableEntry';
+import { ItemDisplayInput } from '../../../pages/items';
+import { GroupAddRemoveEntry } from './GroupAddRemoveEntry';
 
-const SetTagTableContainer = styled.div`
+const GroupAddRemoveContainer = styled.div`
   background-color: var(${SemanticColors.altText});
   border: 1px solid black;
 `;
@@ -16,7 +15,7 @@ const Row = styled.div`
   padding: 3px;
 `;
 
-const TagsList = styled.div`
+const GroupList = styled.div`
   display: flex;
   border-top: 1px solid black;
   padding: 5px;
@@ -25,32 +24,37 @@ const TagsList = styled.div`
   flex-wrap: wrap;
 `;
 
-export interface SetTagTableProps {
+export interface GroupAddRemoveProps {
   onAdd: (tag: string) => void;
   onRemove: (tag: string) => void;
+  groups: string[];
 }
 
-export const SetTagTable: React.FC<SetTagTableProps> = ({
+export const GroupAddRemove: React.FC<GroupAddRemoveProps> = ({
   onAdd,
   onRemove,
+  groups,
 }) => {
-  const tags = useTags();
   const [search, setSearch] = React.useState('');
 
   return (
-    <SetTagTableContainer>
+    <GroupAddRemoveContainer>
       <Row>
         <ItemDisplayInput label="Search" value={search} onChange={setSearch} />
       </Row>
-      <TagsList>
-        {tags.map((tag) => {
+      <GroupList>
+        {groups.map((tag) => {
           if (tag.includes(search)) {
             return (
-              <SetTagTableEntry tag={tag} onAdd={onAdd} onRemove={onRemove} />
+              <GroupAddRemoveEntry
+                tag={tag}
+                onAdd={onAdd}
+                onRemove={onRemove}
+              />
             );
           }
         })}
-      </TagsList>
-    </SetTagTableContainer>
+      </GroupList>
+    </GroupAddRemoveContainer>
   );
 };

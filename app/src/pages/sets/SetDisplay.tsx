@@ -4,9 +4,9 @@ import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Button, MultiSelectList } from '../../components';
 import { ItemSet } from '../../types';
-import { useItems } from '../../utils';
+import { useItems, useTags } from '../../utils';
 import { ItemDescriptionInput, ItemDisplayInput } from '../items';
-import { SetTagTable } from './inputs';
+import { GroupAddRemove } from './inputs';
 
 const SetDisplayContainer = styled.div`
   display: flex;
@@ -22,6 +22,7 @@ export const SetDisplay: React.FC<{
   const [name, setName] = React.useState(set?.name ?? '');
   const [description, setDescription] = React.useState(set?.description ?? '');
   const [itemIDs, setItemIDs] = React.useState<string[]>(set?.itemIDs ?? []);
+  const tags = useTags();
 
   const { data: items, isLoading } = useItems();
 
@@ -76,7 +77,11 @@ export const SetDisplay: React.FC<{
         value={description}
         onChange={setDescription}
       />
-      <SetTagTable onAdd={addTagItems} onRemove={removeTagItems} />
+      <GroupAddRemove
+        groups={tags}
+        onAdd={addTagItems}
+        onRemove={removeTagItems}
+      />
       <MultiSelectList
         entries={items ?? []}
         selectedEntries={itemIDs}

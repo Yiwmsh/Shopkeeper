@@ -1,26 +1,26 @@
 import styled from '@emotion/styled';
-import { Button } from '../../../../components';
+import { Button } from '../..';
 
-const SetTagTableEntryContainer = styled.div`
+const GroupAddRemoveEntryContainer = styled.div`
   display: flex;
   gap: 10px;
   padding: 3px;
   border: 1px solid black;
 `;
 
-export interface SetTagTableEntryProps {
+export interface GroupAddRemoveEntryProps {
   tag: string;
   onAdd: (tag: string) => void;
   onRemove: (tag: string) => void;
 }
 
-export const SetTagTableEntry: React.FC<SetTagTableEntryProps> = ({
+export const GroupAddRemoveEntry: React.FC<GroupAddRemoveEntryProps> = ({
   tag,
   onAdd,
   onRemove,
 }) => {
   return (
-    <SetTagTableEntryContainer>
+    <GroupAddRemoveEntryContainer>
       <Button buttonType="constructive" onClick={() => onAdd(tag)}>
         +
       </Button>
@@ -28,6 +28,6 @@ export const SetTagTableEntry: React.FC<SetTagTableEntryProps> = ({
       <Button buttonType="destructive" onClick={() => onRemove(tag)}>
         -
       </Button>
-    </SetTagTableEntryContainer>
+    </GroupAddRemoveEntryContainer>
   );
 };
