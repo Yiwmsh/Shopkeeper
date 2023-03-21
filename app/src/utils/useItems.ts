@@ -9,9 +9,7 @@ const loadItems = async (): Promise<Item[]> => {
     if (typeof loadedItems !== 'undefined') {
       return loadedItems;
     }
-  } catch (e) {
-    console.log(e);
-  }
+  } catch (e) {}
 
   return [];
 };

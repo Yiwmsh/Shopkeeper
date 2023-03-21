@@ -1,6 +1,6 @@
 import { v4 as uuidv4 } from 'uuid';
-import { identifiableObject } from './identifiableObject';
-export interface Item extends identifiableObject {
+import { IdentifiableObject } from './identifiableObject';
+export interface Item extends IdentifiableObject {
   source?: string;
   value: number;
   weight: number;

@@ -1,4 +1,4 @@
-export interface identifiableObject {
+export interface IdentifiableObject {
   name: string;
   uid: string;
 }

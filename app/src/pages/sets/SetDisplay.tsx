@@ -3,7 +3,9 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import { Button } from '../../components/inputs/Button';
+import { MultiSelectList } from '../../components/inputs/MultiSelectList';
 import { ItemSet } from '../../types/itemSet';
+import { useItems } from '../../utils/useItems';
 import { ItemDescriptionInput } from '../items/inputs/ItemDescriptionInput';
 import { ItemDisplayInput } from '../items/inputs/ItemDisplayInput';
 
@@ -17,7 +19,23 @@ export const SetDisplay: React.FC<{
   const [name, setName] = React.useState(set?.name ?? '');
   const [description, setDescription] = React.useState(set?.description ?? '');
   const [itemIDs, setItemIDs] = React.useState<string[]>(set?.itemIDs ?? []);
-  const [uid, setUid] = React.useState(set?.uid ?? uuidv4());
+
+  const { data: items, isLoading } = useItems();
+
+  const onSelectionChanged = (
+    selectedEntry: string,
+    selectionState: 'select' | 'unselect'
+  ) => {
+    if (itemIDs.some((id) => id === selectedEntry)) {
+      if (selectionState === 'unselect') {
+        setItemIDs(itemIDs.filter((item) => item !== selectedEntry));
+      }
+    } else {
+      if (selectionState === 'select') {
+        setItemIDs([...itemIDs, selectedEntry]);
+      }
+    }
+  };
 
   React.useEffect(() => {
     setName(set?.name ?? '');
@@ -32,6 +50,11 @@ export const SetDisplay: React.FC<{
         label="Description"
         value={description}
         onChange={setDescription}
+      />
+      <MultiSelectList
+        entries={items ?? []}
+        selectedEntries={itemIDs}
+        onSelectionChange={onSelectionChanged}
       />
       <ButtonBank>
         <Button

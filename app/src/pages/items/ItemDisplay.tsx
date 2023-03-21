@@ -59,7 +59,6 @@ export const ItemDisplay: React.FC<{
       <ItemValueInput
         value={value}
         onChange={(value: number) => {
-          console.log(value);
           setValue(value);
         }}
       />
