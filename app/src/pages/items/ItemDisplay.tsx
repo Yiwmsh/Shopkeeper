@@ -42,7 +42,7 @@ export const ItemDisplay: React.FC<{
   );
 
   const formatTags = (tagsIn: string): string[] => {
-    return tagsIn.replaceAll(',', '').split(' ');
+    return tagsIn.replaceAll(',', '').toLowerCase().split(' ');
   };
 
   useEffect(() => {
