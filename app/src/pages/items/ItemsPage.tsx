@@ -5,6 +5,7 @@ import { Button, SelectableListEntry } from '../../components';
 import { displayValue } from '../../functions';
 import { Item } from '../../types';
 import { ItemDisplay } from './ItemDisplay';
+import { ItemDisplayInput } from './inputs';
 
 const ItemsContainer = styled.div`
   display: flex;
@@ -15,6 +16,7 @@ const ItemsContainer = styled.div`
 const ItemsListCol = styled.div`
   display: flex;
   flex-direction: column;
+  gap: 5px;
 `;
 
 const ItemsList = styled.div`
@@ -32,6 +34,7 @@ export const ItemsPage: React.FC<{ loadedItems: Item[] }> = ({
   const [items, setItems] = React.useState<Item[]>(loadedItems);
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>();
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
+  const [search, setSearch] = React.useState('');
 
   const saveItem = (item: Item) => {
     let newItems = [];
@@ -86,17 +89,28 @@ export const ItemsPage: React.FC<{ loadedItems: Item[] }> = ({
         >
           +{' '}
         </Button>
+        <ItemDisplayInput label="Search" value={search} onChange={setSearch} />
         <ItemsList>
-          {loadedItems.map((item) => (
-            <SelectableListEntry
-              onSelect={() => setSelectedItem(item)}
-              onDelete={() => deleteItem(item.uid)}
-              isSelected={selectedItem === item}
-            >
-              <div>{item.name}</div>
-              <div>{displayValue(item.value, 'long')}</div>
-            </SelectableListEntry>
-          ))}
+          {loadedItems.map((item) => {
+            if (
+              search === '' ||
+              item.name.toLowerCase().includes(search.toLowerCase()) ||
+              item.tags?.some((tag) =>
+                tag.toLowerCase().includes(search.toLowerCase())
+              )
+            ) {
+              return (
+                <SelectableListEntry
+                  onSelect={() => setSelectedItem(item)}
+                  onDelete={() => deleteItem(item.uid)}
+                  isSelected={selectedItem === item}
+                >
+                  <div>{item.name}</div>
+                  <div>{displayValue(item.value, 'long')}</div>
+                </SelectableListEntry>
+              );
+            }
+          })}
         </ItemsList>
       </ItemsListCol>
     </ItemsContainer>
