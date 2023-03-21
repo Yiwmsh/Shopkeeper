@@ -11,7 +11,7 @@ const TextAreaLabel = styled.label``;
 const TextAreaInput = styled.textarea`
   resize: both;
   width: 440px;
-  height: 50px;
+  height: 100px;
 `;
 
 export const TextArea: React.FC<ItemDisplayProps> = ({
