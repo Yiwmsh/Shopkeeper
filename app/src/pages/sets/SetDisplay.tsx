@@ -8,6 +8,7 @@ import { ItemSet } from '../../types/itemSet';
 import { useItems } from '../../utils/useItems';
 import { ItemDescriptionInput } from '../items/inputs/ItemDescriptionInput';
 import { ItemDisplayInput } from '../items/inputs/ItemDisplayInput';
+import { SetTagTable } from './inputs/SetTagTable/SetTagTable';
 
 const SetDisplayContainer = styled.div`
   display: flex;
@@ -41,6 +42,28 @@ export const SetDisplay: React.FC<{
     }
   };
 
+  const addTagItems = (tag: string) => {
+    const tagItems = items
+      ?.filter((item) => item.tags?.some((itemTag) => itemTag === tag))
+      .map((tagItem) => tagItem.uid);
+    if (tagItems) {
+      setItemIDs([...itemIDs, ...tagItems]);
+    }
+  };
+
+  const removeTagItems = (tag: string) => {
+    const tagItems = items
+      ?.filter((item) => item.tags?.some((itemTag) => itemTag === tag))
+      .map((tagItem) => tagItem.uid);
+    if (tagItems) {
+      setItemIDs([
+        ...itemIDs.filter(
+          (itemID) => !tagItems.some((tagItem) => tagItem === itemID)
+        ),
+      ]);
+    }
+  };
+
   React.useEffect(() => {
     setName(set?.name ?? '');
     setDescription(set?.description ?? '');
@@ -55,6 +78,7 @@ export const SetDisplay: React.FC<{
         value={description}
         onChange={setDescription}
       />
+      <SetTagTable onAdd={addTagItems} onRemove={removeTagItems} />
       <MultiSelectList
         entries={items ?? []}
         selectedEntries={itemIDs}
