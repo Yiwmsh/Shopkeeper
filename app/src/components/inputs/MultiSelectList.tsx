@@ -7,7 +7,10 @@ import { IdentifiableObject } from '../../types';
 
 const MultiSelectListWrapper = styled.div`
   background-color: var(${SemanticColors.altText});
+  width: 445px;
+  max-height: 145px;
   border: 1px solid black;
+  overflow: hidden;
 `;
 
 const Row = styled.div`
@@ -21,8 +24,9 @@ const ItemsContainer = styled(motion.div)`
   border-top: 1px solid black;
   padding: 5px;
   gap: 5px;
-  width: 435px;
   flex-wrap: wrap;
+  overflow-y: scroll;
+  max-height: 100%;
 `;
 
 const MultiSelectListEntry = styled(motion.button)<{ selected?: boolean }>`

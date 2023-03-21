@@ -7,6 +7,9 @@ import { GroupAddRemoveEntry } from './GroupAddRemoveEntry';
 const GroupAddRemoveContainer = styled.div`
   background-color: var(${SemanticColors.altText});
   border: 1px solid black;
+  width: 445px;
+  max-height: 145px;
+  overflow: hidden;
 `;
 
 const Row = styled.div`
@@ -18,10 +21,11 @@ const Row = styled.div`
 const GroupList = styled.div`
   display: flex;
   border-top: 1px solid black;
+  max-height: 100%;
   padding: 5px;
   gap: 5px;
-  width: 435px;
   flex-wrap: wrap;
+  overflow-y: scroll;
 `;
 
 export interface GroupAddRemoveProps {
