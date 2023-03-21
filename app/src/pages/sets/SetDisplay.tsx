@@ -5,7 +5,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Button, GroupAddRemove, MultiSelectList } from '../../components';
 import { ItemSet } from '../../types';
 import { useItems, useTags } from '../../utils';
-import { ItemDescriptionInput, ItemDisplayInput } from '../items';
+import { ItemDisplayInput, TextArea } from '../items';
 
 const SetDisplayContainer = styled.div`
   display: flex;
@@ -71,7 +71,7 @@ export const SetDisplay: React.FC<{
   return (
     <SetDisplayContainer>
       <ItemDisplayInput label="Name" value={name} onChange={setName} />
-      <ItemDescriptionInput
+      <TextArea
         label="Description"
         value={description}
         onChange={setDescription}

@@ -6,12 +6,12 @@ import { Button } from '../../components';
 import { Item } from '../../types';
 import {
   ItemConsumableCheckbox,
-  ItemDescriptionInput,
   ItemDisplayInput,
   ItemMagicCheckbox,
   ItemRaritySelect,
   ItemStockRangeInput,
   ItemValueInput,
+  TextArea,
 } from './inputs';
 
 const ItemDisplayContainer = styled.div`
@@ -81,7 +81,7 @@ export const ItemDisplay: React.FC<{
           }
         }}
       />
-      <ItemDescriptionInput
+      <TextArea
         label="Description"
         value={description}
         onChange={setDescription}
