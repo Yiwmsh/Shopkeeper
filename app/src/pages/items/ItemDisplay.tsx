@@ -12,7 +12,11 @@ import { ItemRaritySelect } from './inputs/ItemRaritySelect';
 import { ItemStockRangeInput } from './inputs/ItemStockRangeInput';
 import { ItemValueInput } from './inputs/ItemValueInput';
 
-const ItemDisplayContainer = styled.div``;
+const ItemDisplayContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+`;
 
 export const ItemDisplay: React.FC<{
   item: Item | undefined;
