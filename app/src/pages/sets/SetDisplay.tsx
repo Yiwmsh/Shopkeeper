@@ -87,6 +87,7 @@ export const SetDisplay: React.FC<{
         onChange={setDescription}
       />
       <MultiSelectList
+        maxHeight="300px"
         entries={items ?? []}
         selectedEntries={itemIDs}
         onSelectionChange={onSelectionChanged}
