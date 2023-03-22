@@ -2,7 +2,7 @@ import { ButtonBank } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
 import React from 'react';
 import { v4 as uuidv4 } from 'uuid';
-import { Button, GroupAddRemove, MultiSelectList } from '../../components';
+import { Button, MultiSelectList } from '../../components';
 import { ItemSet } from '../../types';
 import { useItems, useTags } from '../../utils';
 import { ItemDisplayInput, TextArea } from '../items';
@@ -85,11 +85,6 @@ export const SetDisplay: React.FC<{
         label="Description"
         value={description}
         onChange={setDescription}
-      />
-      <GroupAddRemove
-        groups={tags}
-        onAdd={addTagItems}
-        onRemove={removeTagItems}
       />
       <MultiSelectList
         entries={items ?? []}

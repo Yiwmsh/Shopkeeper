@@ -74,7 +74,13 @@ export const MultiSelectList: React.FC<MultiSelectListProps> = ({
               selectedEntries.some(
                 (selectedEntry) => entry.uid === selectedEntry
               )) &&
-            entry.name.toLowerCase().includes(search.toLowerCase())
+            (entry.name.toLowerCase().includes(search.toLowerCase()) ||
+              search
+                .toLowerCase()
+                .split(' ')
+                .every((searchTag) =>
+                  entry.tags?.some((entryTag) => entryTag.includes(searchTag))
+                ))
         )
       );
     }

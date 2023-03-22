@@ -7,7 +7,6 @@ export interface Item extends IdentifiableObject {
   description: string;
   magic: boolean;
   rarity: string;
-  tags?: string[];
   consumable: boolean;
   stockRange: {
     low: number;
