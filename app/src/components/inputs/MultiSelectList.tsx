@@ -4,6 +4,7 @@ import { motion } from 'framer-motion';
 import React from 'react';
 import { ItemDisplayInput } from '../../pages';
 import { IdentifiableObject } from '../../types';
+import { Button } from './Button';
 
 const MultiSelectListWrapper = styled.div`
   background-color: var(${SemanticColors.altText});
@@ -38,7 +39,7 @@ export interface MultiSelectListProps {
   entries: IdentifiableObject[];
   selectedEntries: string[];
   onSelectionChange: (
-    selectedEntry: string,
+    selectedEntries: string[],
     selectionState: 'select' | 'unselect'
   ) => void;
 }
@@ -50,6 +51,34 @@ export const MultiSelectList: React.FC<MultiSelectListProps> = ({
 }) => {
   const [search, setSearch] = React.useState('');
   const [selectedOnly, setSelectedOnly] = React.useState(false);
+  const [filteredEntries, setFilteredEntries] = React.useState<
+    IdentifiableObject[]
+  >([]);
+
+  React.useEffect(() => {
+    if (search === '') {
+      setFilteredEntries(
+        selectedOnly
+          ? entries.filter((entry) =>
+              selectedEntries.some(
+                (selectedEntry) => selectedEntry === entry.uid
+              )
+            )
+          : entries
+      );
+    } else {
+      setFilteredEntries(
+        entries.filter(
+          (entry) =>
+            (!selectedOnly ||
+              selectedEntries.some(
+                (selectedEntry) => entry.uid === selectedEntry
+              )) &&
+            entry.name.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
+  }, [entries, search, selectedOnly]);
   return (
     <MultiSelectListWrapper>
       <Row>
@@ -62,53 +91,68 @@ export const MultiSelectList: React.FC<MultiSelectListProps> = ({
             onChange={() => setSelectedOnly(!selectedOnly)}
           />
         </div>
+        <Button
+          buttonType="constructive"
+          onClick={() => {
+            onSelectionChange(
+              filteredEntries.map((entry) => entry.uid),
+              'select'
+            );
+          }}
+        >
+          Add All
+        </Button>
+        <Button
+          buttonType="destructive"
+          onClick={() =>
+            onSelectionChange(
+              filteredEntries.map((entry) => entry.uid),
+              'unselect'
+            )
+          }
+        >
+          Clear
+        </Button>
       </Row>
       <ItemsContainer>
-        {entries.map((entry) => {
+        {filteredEntries.map((entry) => {
           const isSelected = selectedEntries.some(
             (selectedEntry) => selectedEntry === entry.uid
           );
-          if (!selectedOnly || isSelected) {
-            if (
-              search === '' ||
-              entry.name.toLowerCase().includes(search.toLowerCase())
-            ) {
-              return (
-                <MultiSelectListEntry
-                  selected={isSelected}
-                  initial={{
-                    backgroundColor: `var(${SemanticColors.altText})`,
-                  }}
-                  animate={{
-                    backgroundColor: isSelected
-                      ? `var(${SemanticColors.primary})`
-                      : `var(${SemanticColors.altText})`,
+          return (
+            <MultiSelectListEntry
+              selected={isSelected}
+              initial={{
+                backgroundColor: `var(${SemanticColors.altText})`,
+              }}
+              animate={{
+                backgroundColor: isSelected
+                  ? `var(${SemanticColors.primary})`
+                  : `var(${SemanticColors.altText})`,
 
-                    color: isSelected
-                      ? `var(${SemanticColors.altText})`
-                      : `var(${SemanticColors.text})`,
-                  }}
-                  whileHover={{
-                    backgroundColor: `var(${SemanticColors.primaryActive})`,
-                    color: `var(${SemanticColors.altText})`,
-                  }}
-                  whileTap={{
-                    backgroundColor: `var(${SemanticColors.primaryDisabled})`,
-                    color: `var(${SemanticColors.altText})`,
-                  }}
-                  transition={{ duration: 0.2 }}
-                  onClick={() =>
-                    onSelectionChange(
-                      entry.uid,
-                      isSelected ? 'unselect' : 'select'
-                    )
-                  }
-                >
-                  {entry.name}
-                </MultiSelectListEntry>
-              );
-            }
-          }
+                color: isSelected
+                  ? `var(${SemanticColors.altText})`
+                  : `var(${SemanticColors.text})`,
+              }}
+              whileHover={{
+                backgroundColor: `var(${SemanticColors.primaryActive})`,
+                color: `var(${SemanticColors.altText})`,
+              }}
+              whileTap={{
+                backgroundColor: `var(${SemanticColors.primaryDisabled})`,
+                color: `var(${SemanticColors.altText})`,
+              }}
+              transition={{ duration: 0.2 }}
+              onClick={() =>
+                onSelectionChange(
+                  [entry.uid],
+                  isSelected ? 'unselect' : 'select'
+                )
+              }
+            >
+              {entry.name}
+            </MultiSelectListEntry>
+          );
         })}
       </ItemsContainer>
     </MultiSelectListWrapper>

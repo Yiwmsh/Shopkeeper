@@ -26,18 +26,28 @@ export const SetDisplay: React.FC<{
   const { data: items, isLoading } = useItems();
 
   const onSelectionChanged = (
-    selectedEntry: string,
+    selectedEntries: string[],
     selectionState: 'select' | 'unselect'
   ) => {
-    if (itemIDs.some((id) => id === selectedEntry)) {
-      if (selectionState === 'unselect') {
-        setItemIDs(itemIDs.filter((item) => item !== selectedEntry));
-      }
-    } else {
-      if (selectionState === 'select') {
-        setItemIDs([...itemIDs, selectedEntry]);
-      }
+    if (selectionState === 'select') {
+      setItemIDs([...itemIDs, ...selectedEntries]);
+    } else if (selectionState === 'unselect') {
+      setItemIDs([
+        ...itemIDs.filter(
+          (itemID) =>
+            !selectedEntries.some((selectedEntry) => itemID === selectedEntry)
+        ),
+      ]);
     }
+    // if (itemIDs.some((id) => id === selectedEntry)) {
+    //   if (selectionState === 'unselect') {
+    //     setItemIDs(itemIDs.filter((item) => item !== selectedEntry));
+    //   }
+    // } else {
+    //   if (selectionState === 'select') {
+    //     setItemIDs([...itemIDs, selectedEntry]);
+    //   }
+    // }
   };
 
   const addTagItems = (tag: string) => {
