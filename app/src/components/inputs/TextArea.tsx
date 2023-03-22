@@ -1,5 +1,5 @@
 import styled from '@emotion/styled';
-import { ItemDisplayProps } from '../../pages/items/inputs/ItemDisplayInput';
+import { InputProps } from './Input';
 
 const TextAreaRow = styled.div`
   display: flex;
@@ -14,11 +14,7 @@ const TextAreaInput = styled.textarea`
   height: 100px;
 `;
 
-export const TextArea: React.FC<ItemDisplayProps> = ({
-  label,
-  onChange,
-  value,
-}) => {
+export const TextArea: React.FC<InputProps> = ({ label, onChange, value }) => {
   return (
     <TextAreaRow>
       <TextAreaLabel>{label}</TextAreaLabel>

@@ -1,7 +1,7 @@
 import { SemanticColors } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
 import React from 'react';
-import { ItemDisplayInput } from '../../../pages/items';
+import { Input } from '../../../pages/items';
 import { GroupAddRemoveEntry } from './GroupAddRemoveEntry';
 
 const GroupAddRemoveContainer = styled.div`
@@ -44,7 +44,7 @@ export const GroupAddRemove: React.FC<GroupAddRemoveProps> = ({
   return (
     <GroupAddRemoveContainer>
       <Row>
-        <ItemDisplayInput label="Search" value={search} onChange={setSearch} />
+        <Input label="Search" value={search} onChange={setSearch} />
       </Row>
       <GroupList>
         {groups.map((tag) => {

@@ -2,7 +2,7 @@ import { SemanticColors } from '@chrisellis/react-carpentry';
 import styled from '@emotion/styled';
 import { motion } from 'framer-motion';
 import React from 'react';
-import { ItemDisplayInput } from '../../pages';
+import { Input } from '../../pages';
 import { IdentifiableObject } from '../../types';
 import { Button } from './Button';
 
@@ -95,7 +95,7 @@ export const MultiSelectList: React.FC<MultiSelectListProps> = ({
   return (
     <MultiSelectListWrapper maxHeight={maxHeight}>
       <Row>
-        <ItemDisplayInput label="Search" value={search} onChange={setSearch} />
+        <Input label="Search" value={search} onChange={setSearch} />
         <div>
           <label>Selected Only</label>
           <input

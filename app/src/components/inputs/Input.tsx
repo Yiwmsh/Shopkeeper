@@ -1,38 +1,38 @@
 import styled from '@emotion/styled';
 
-const ItemDisplayInputField = styled.input`
+const InputField = styled.input`
   width: 100px;
 `;
 
-const ItemDisplayInputLabel = styled.label``;
+const InputLabel = styled.label``;
 
-const ItemDisplayInputContainer = styled.div`
+const InputContainer = styled.div`
   display: flex;
   gap: 5px;
 `;
 
-export interface ItemDisplayProps {
+export interface InputProps {
   value: string;
   onChange: (value: string) => void;
   label: string;
   type?: React.HTMLInputTypeAttribute;
 }
 
-export const ItemDisplayInput: React.FC<ItemDisplayProps> = ({
+export const Input: React.FC<InputProps> = ({
   value,
   onChange,
   label,
   type,
 }) => {
   return (
-    <ItemDisplayInputContainer>
-      <ItemDisplayInputLabel htmlFor={label}>{label}</ItemDisplayInputLabel>
-      <ItemDisplayInputField
+    <InputContainer>
+      <InputLabel htmlFor={label}>{label}</InputLabel>
+      <InputField
         type={type ?? 'text'}
         name={label}
         value={value}
         onChange={(event) => onChange(event.target.value)}
       />
-    </ItemDisplayInputContainer>
+    </InputContainer>
   );
 };

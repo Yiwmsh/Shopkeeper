@@ -2,10 +2,11 @@ import { css } from '@emotion/react';
 import styled from '@emotion/styled';
 import React from 'react';
 import { Button, SelectableListEntry } from '../../components';
+import { DEFAULT_ITEM } from '../../consts';
 import { displayValue } from '../../functions';
 import { Item } from '../../types';
 import { ItemDisplay } from './ItemDisplay';
-import { ItemDisplayInput } from './inputs';
+import { Input } from './inputs';
 
 const ItemsContainer = styled.div`
   display: flex;
@@ -35,6 +36,9 @@ export const ItemsPage: React.FC<{ loadedItems: Item[] }> = ({
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>();
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
   const [search, setSearch] = React.useState('');
+  const [defaultItem, setDefaultItem] = React.useState<Item>({
+    ...DEFAULT_ITEM,
+  });
 
   const saveItem = (item: Item) => {
     let newItems = [];
@@ -70,7 +74,9 @@ export const ItemsPage: React.FC<{ loadedItems: Item[] }> = ({
   return (
     <ItemsContainer>
       <ItemDisplay
-        item={selectedItem}
+        onDefaultChanged={setDefaultItem}
+        defaultItem={defaultItem}
+        item={selectedItem ?? defaultItem}
         saveItem={saveItem}
         deleteItem={deleteItem}
       />
@@ -89,7 +95,7 @@ export const ItemsPage: React.FC<{ loadedItems: Item[] }> = ({
         >
           +{' '}
         </Button>
-        <ItemDisplayInput label="Search" value={search} onChange={setSearch} />
+        <Input label="Search" value={search} onChange={setSearch} />
         <ItemsList>
           {loadedItems.map((item) => {
             if (
