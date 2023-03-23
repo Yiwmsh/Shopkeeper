@@ -80,7 +80,7 @@ export const Layout: React.FC = () => {
         <Navlist>
           <NavElement link="/items" title="Items" />
           <NavElement link="/sets" title="Sets" />
-          <NavElement link="/stores" title="Stores" />
+          <NavElement link="/shops" title="Shops" />
         </Navlist>
       </Navbar>
       <Page>

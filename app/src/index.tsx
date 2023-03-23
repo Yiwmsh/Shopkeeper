@@ -27,7 +27,7 @@ root.render(
               <Route path="/" element={<Layout />}>
                 <Route path="/items" element={<ItemLoader />} />
                 <Route path="/sets" element={<SetsLoader />} />
-                <Route path="/stores" element={<ShopsLoader />} />
+                <Route path="/shops" element={<ShopsLoader />} />
               </Route>
             </Routes>
           </BrowserRouter>
