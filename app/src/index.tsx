@@ -7,6 +7,7 @@ import { Layout } from './components';
 import { Page } from './components/Page';
 import { LightTheme } from './consts/themes';
 import './index.css';
+import { ShopsLoader } from './pages';
 import { ItemLoader } from './pages/items/ItemLoader';
 import { SetsLoader } from './pages/sets/SetsLoader';
 import reportWebVitals from './reportWebVitals';
@@ -26,7 +27,7 @@ root.render(
               <Route path="/" element={<Layout />}>
                 <Route path="/items" element={<ItemLoader />} />
                 <Route path="/sets" element={<SetsLoader />} />
-                <Route path="/stores" element={<></>} />
+                <Route path="/stores" element={<ShopsLoader />} />
               </Route>
             </Routes>
           </BrowserRouter>

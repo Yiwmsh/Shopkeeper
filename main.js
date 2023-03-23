@@ -4,6 +4,7 @@ const path = require('path');
 const isDev = require('electron-is-dev');
 require('./itemHandler.js');
 require('./setHandler.js');
+require('./shopHandler.js');
 
 function createMainWindow() {
   const mainWindow = new BrowserWindow({

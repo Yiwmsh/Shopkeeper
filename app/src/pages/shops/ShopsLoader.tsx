@@ -1,4 +1,5 @@
 import { useShops } from '../../utils/useShops';
+import { ShopsPage } from './ShopsPage';
 
 export const ShopsLoader: React.FC = () => {
   const { data: shops, isLoading, isError, error } = useShops();
@@ -11,5 +12,5 @@ export const ShopsLoader: React.FC = () => {
     return <>{error}</>;
   }
 
-  return <></>;
+  return <ShopsPage loadedShops={shops} />;
 };
