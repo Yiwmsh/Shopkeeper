@@ -5,8 +5,11 @@ import { Shop } from '../../../types/shop';
 const ShopsListContainer = styled.div`
   padding: 20px;
   display: flex;
+  gap: 5px;
   flex-direction: horizontal;
   flex-wrap: wrap;
+  overflow: auto;
+  max-height: 65vh;
 `;
 
 export const ShopsList: React.FC<{
