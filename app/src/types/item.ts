@@ -1,7 +1,7 @@
 import { v4 as uuidv4 } from 'uuid';
 import { IdentifiableObject } from './identifiableObject';
-export interface Item extends IdentifiableObject {
-  source?: string;
+import { saveableObject as SaveableObject } from './saveableObject';
+export interface Item extends IdentifiableObject, SaveableObject {
   value: number;
   weight: number;
   description: string;

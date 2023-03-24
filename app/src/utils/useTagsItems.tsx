@@ -1,4 +1,4 @@
-import { useItems } from './useItems';
+import { useItems } from './items/useItems';
 
 export const useTagsItems = (tags: string[]) => {
   const { data: items, isLoading, isError } = useItems();

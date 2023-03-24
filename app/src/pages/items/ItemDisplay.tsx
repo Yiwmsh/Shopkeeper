@@ -57,7 +57,7 @@ const UpdateDefaultButton: React.FC<{
 export const ItemDisplay: React.FC<{
   item: Item | undefined;
   saveItem: (item: Item) => void;
-  deleteItem: (itemID: string) => void;
+  deleteItem: (item: Item) => void;
   onDefaultChanged: (newDefault: Item) => void;
   defaultItem: Item;
 }> = ({ item, saveItem, deleteItem, onDefaultChanged, defaultItem }) => {
@@ -255,7 +255,12 @@ export const ItemDisplay: React.FC<{
       </Row>
       <ButtonBank>
         <Button
-          onClick={() =>
+          onClick={() => {
+            if (item?.uid && source !== item?.source) {
+              console.log('deleting original object');
+              deleteItem(item);
+            }
+
             saveItem({
               uid: item?.uid ? item.uid : uuidv4(),
               name: name,
@@ -271,8 +276,8 @@ export const ItemDisplay: React.FC<{
                 low: stockLowEnd,
                 high: stockHighEnd,
               },
-            })
-          }
+            });
+          }}
           buttonType="constructive"
         >
           Save
@@ -280,7 +285,7 @@ export const ItemDisplay: React.FC<{
         <Button
           onClick={() => {
             if (item) {
-              deleteItem(item.uid);
+              deleteItem(item);
             }
           }}
           buttonType="destructive"

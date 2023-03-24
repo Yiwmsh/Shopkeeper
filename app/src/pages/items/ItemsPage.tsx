@@ -5,6 +5,7 @@ import { Button, SelectableListEntry } from '../../components';
 import { DEFAULT_ITEM } from '../../consts';
 import { displayValue } from '../../functions';
 import { Item } from '../../types';
+import { useDeleteItem, useSaveItem } from '../../utils';
 import { ItemDisplay } from './ItemDisplay';
 import { Input } from './inputs';
 
@@ -31,7 +32,8 @@ const ItemsList = styled.div`
 export const ItemsPage: React.FC<{ loadedItems: Item[] }> = ({
   loadedItems,
 }) => {
-  const ipcRenderer = (window as any).ipcRenderer;
+  const saveItem = useSaveItem();
+  const deleteItem = useDeleteItem();
   const [items, setItems] = React.useState<Item[]>(loadedItems);
   const [selectedItem, setSelectedItem] = React.useState<Item | undefined>();
   const [isSaving, setIsSaving] = React.useState<boolean>(false);
@@ -39,37 +41,6 @@ export const ItemsPage: React.FC<{ loadedItems: Item[] }> = ({
   const [defaultItem, setDefaultItem] = React.useState<Item>({
     ...DEFAULT_ITEM,
   });
-
-  const saveItem = (item: Item) => {
-    let newItems = [];
-    const matchingItem = items.filter((arrItem) => arrItem.uid === item.uid);
-    if (matchingItem.length < 1) {
-      newItems = [item, ...items];
-    } else {
-      const otherItems = items.filter((arrItem) => arrItem.uid !== item.uid);
-      newItems = [item, ...otherItems];
-    }
-    ipcRenderer.send('saveItems', {
-      items: newItems,
-    });
-
-    setItems(newItems);
-  };
-
-  const deleteItem = (itemID: string) => {
-    const matchingItem = items.filter((arrItem) => arrItem.uid === itemID);
-    if (matchingItem.length === 1) {
-      const otherItems = items.filter((arrItem) => arrItem.uid !== itemID);
-
-      const newItems = [...otherItems];
-
-      ipcRenderer.send('saveItems', {
-        items: newItems,
-      });
-
-      setItems(newItems);
-    }
-  };
 
   return (
     <ItemsContainer>
@@ -111,7 +82,7 @@ export const ItemsPage: React.FC<{ loadedItems: Item[] }> = ({
               return (
                 <SelectableListEntry
                   onSelect={() => setSelectedItem(item)}
-                  onDelete={() => deleteItem(item.uid)}
+                  onDelete={() => deleteItem(item)}
                   isSelected={selectedItem === item}
                 >
                   <div>{item.name}</div>

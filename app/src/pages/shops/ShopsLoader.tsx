@@ -1,4 +1,4 @@
-import { useShops } from '../../utils/useShops';
+import { useShops } from '../../utils/shops/useShops';
 import { ShopsPage } from './ShopsPage';
 
 export const ShopsLoader: React.FC = () => {

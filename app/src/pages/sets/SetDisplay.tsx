@@ -16,7 +16,7 @@ const SetDisplayContainer = styled.div`
 export const SetDisplay: React.FC<{
   set: ItemSet | undefined;
   saveSet: (set: ItemSet) => void;
-  deleteSet: (setID: string) => void;
+  deleteSet: (set: ItemSet) => void;
 }> = ({ set, saveSet, deleteSet }) => {
   const [name, setName] = React.useState(set?.name ?? '');
   const [description, setDescription] = React.useState(set?.description ?? '');
@@ -109,7 +109,7 @@ export const SetDisplay: React.FC<{
         <Button
           onClick={() => {
             if (set) {
-              deleteSet(set.uid);
+              deleteSet(set);
             }
           }}
           buttonType="destructive"

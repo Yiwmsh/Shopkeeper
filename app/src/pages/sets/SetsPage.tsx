@@ -3,6 +3,7 @@ import styled from '@emotion/styled';
 import React from 'react';
 import { Button, SelectableListEntry } from '../../components';
 import { ItemSet } from '../../types';
+import { useDeleteSet, useSaveSet } from '../../utils';
 import { SetDisplay } from './SetDisplay';
 
 const SetsPageContainer = styled.div`
@@ -34,38 +35,8 @@ export const SetsPage: React.FC<{ loadedSets: ItemSet[] }> = ({
   const [sets, setSets] = React.useState<ItemSet[]>(loadedSets);
   const [selectedSet, setSelectedSet] = React.useState<ItemSet | undefined>();
   const [isSaving, setIsSaving] = React.useState(false);
-
-  const saveSet = (set: ItemSet) => {
-    let newSets = [];
-    const matchingSets = sets.filter((arrSet) => arrSet.uid === set.uid);
-    if (matchingSets.length < 1) {
-      newSets = [set, ...sets];
-    } else {
-      const otherSets = sets.filter((arrSet) => arrSet.uid !== set.uid);
-      newSets = [set, ...otherSets];
-    }
-
-    ipcRenderer.send('saveSets', {
-      sets: newSets,
-    });
-
-    setSets(newSets);
-  };
-
-  const deleteSet = (setID: string) => {
-    const matchingSet = sets.filter((arrSet) => arrSet.uid === setID);
-    if (matchingSet.length === 1) {
-      const otherSets = sets.filter((arrSet) => arrSet.uid !== setID);
-
-      const newSets = [...otherSets];
-
-      ipcRenderer.send('saveSets', {
-        sets: newSets,
-      });
-
-      setSets(newSets);
-    }
-  };
+  const saveSet = useSaveSet();
+  const deleteSet = useDeleteSet();
 
   return (
     <SetsPageContainer>
@@ -88,9 +59,7 @@ export const SetsPage: React.FC<{ loadedSets: ItemSet[] }> = ({
           {sets.map((set) => (
             <SelectableListEntry
               onSelect={() => setSelectedSet(set)}
-              onDelete={() => {
-                deleteSet(set.uid);
-              }}
+              onDelete={() => deleteSet(set)}
             >
               <div>{set.name}</div>
             </SelectableListEntry>

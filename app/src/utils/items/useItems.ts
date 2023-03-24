@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Item } from '../types';
+import { Item } from '../../types';
 
 const loadItems = async (): Promise<Item[]> => {
   const ipcRenderer = (window as any).ipcRenderer;

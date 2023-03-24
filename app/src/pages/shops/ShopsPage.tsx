@@ -4,6 +4,7 @@ import React from 'react';
 import { Button } from '../../components';
 import { DEFAULT_SHOP } from '../../consts/defaultShop';
 import { Shop } from '../../types/shop';
+import { useDeleteShop, useSaveShop } from '../../utils';
 import { ShopView } from './ShopView/ShopView';
 import { ShopsList } from './ShopsList/ShopsList';
 
@@ -22,50 +23,8 @@ export const ShopsPage: React.FC<{ loadedShops: Shop[] }> = ({
   const [selectedShop, setSelectedShop] = React.useState<Shop | undefined>(
     undefined
   );
-
-  const saveShops = (newShops: Shop[]) => {
-    ipcRenderer.send('saveShops', {
-      shops: newShops,
-    });
-  };
-
-  const onSave = (shop: Shop) => {
-    const matchingShop: Shop[] = [];
-    const otherShops: Shop[] = [];
-
-    const newShops: Shop[] = [];
-
-    for (const loadedShop of shops) {
-      if (loadedShop.uid === shop.uid) {
-        matchingShop.push(loadedShop);
-      } else {
-        otherShops.push(loadedShop);
-      }
-    }
-
-    newShops.push(...otherShops, shop);
-
-    saveShops(newShops);
-
-    setShops(newShops);
-  };
-
-  const onDelete = (shop: Shop) => {
-    const matchingShop: Shop[] = [];
-    const otherShops: Shop[] = [];
-
-    for (const loadedShop of shops) {
-      if (loadedShop.uid === shop.uid) {
-        matchingShop.push(loadedShop);
-      } else {
-        otherShops.push(loadedShop);
-      }
-    }
-
-    saveShops(otherShops);
-
-    setShops(otherShops);
-  };
+  const saveShop = useSaveShop();
+  const deleteShop = useDeleteShop();
 
   return selectedShop === undefined ? (
     <ShopPageContainer>
@@ -88,8 +47,8 @@ export const ShopsPage: React.FC<{ loadedShops: Shop[] }> = ({
     <ShopView
       savedShop={selectedShop}
       onBack={() => setSelectedShop(undefined)}
-      onSave={onSave}
-      onDelete={onDelete}
+      onSave={saveShop}
+      onDelete={deleteShop}
     />
   );
 };

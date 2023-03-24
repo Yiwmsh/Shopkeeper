@@ -1,5 +1,5 @@
 import React from 'react';
-import { useItems } from './useItems';
+import { useItems } from './items/useItems';
 
 export const useTags = () => {
   const { data: items } = useItems();

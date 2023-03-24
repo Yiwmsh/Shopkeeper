@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { Shop } from '../types/shop';
+import { Shop } from '../../types/shop';
 
 const loadShops = async (): Promise<Shop[]> => {
   const ipcRenderer = (window as any).ipcRenderer;

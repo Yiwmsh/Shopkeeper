@@ -1,3 +1,5 @@
-export * from './useItems';
-export * from './useSets';
+export * from './items';
+export * from './sets';
+export * from './shops';
 export * from './useTags';
+export * from './useTagsItems';
