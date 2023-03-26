@@ -6,15 +6,17 @@ require('./data handlers/itemHandler');
 require('./data handlers/setHandler');
 require('./data handlers/shopHandler');
 
+let mainWindow;
+
 function createMainWindow() {
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     title: 'Electron Shell',
     width: 1100,
     height: 700,
     webPreferences: {
       contextIsolation: true,
       nodeIntegration: true,
-      preload: path.resolve('./preload.js'),
+      preload: path.join(__dirname, 'preload.js'),
     },
   });
 
@@ -30,6 +32,22 @@ function createMainWindow() {
       });
 
   mainWindow.loadURL(startUrl);
+
+  mainWindow.on('closed', function () {
+    mainWindow = null;
+  });
 }
 
 app.whenReady().then(createMainWindow);
+
+app.on('window-all-closed', function () {
+  if (process.platform !== 'darwin') {
+    app.quit();
+  }
+});
+
+app.on('activate', function () {
+  if (mainWindow === null) {
+    createMainWindow();
+  }
+});

@@ -2,7 +2,7 @@ import { ThemeContext } from '@chrisellis/react-carpentry';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import { HashRouter, Route, Routes } from 'react-router-dom';
 import { Layout } from './components';
 import { Page } from './components/Page';
 import { LightTheme } from './consts/themes';
@@ -22,7 +22,7 @@ root.render(
     <QueryClientProvider client={queryClient}>
       <ThemeContext theme={LightTheme}>
         <Page>
-          <BrowserRouter>
+          <HashRouter>
             <Routes>
               <Route path="/" element={<Layout />}>
                 <Route path="/items" element={<ItemLoader />} />
@@ -30,7 +30,7 @@ root.render(
                 <Route path="/shops" element={<ShopsLoader />} />
               </Route>
             </Routes>
-          </BrowserRouter>
+          </HashRouter>
         </Page>
       </ThemeContext>
     </QueryClientProvider>
