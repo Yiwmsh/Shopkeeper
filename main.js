@@ -27,7 +27,7 @@ function createMainWindow() {
   const startUrl = isDev
     ? 'http://localhost:3000'
     : url.format({
-        pathname: path.join(__dirname, './app/build/index.html'),
+        pathname: path.join(__dirname, './build/index.html'),
         protocol: 'file',
       });
 

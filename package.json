@@ -9,16 +9,19 @@
   "scripts": {
     "start": "yarn build:app && yarn start:prod",
     "dev": "concurrently -k \"yarn dev:server\" \"yarn dev:start\"",
-    "build:app": "cd app && cross-env BROWSER=none yarn build",
+    "build:app": "del-cli build && cd app && cross-env BROWSER=none yarn build && move-cli build ../build",
     "start:prod": "cross-env ELECTRON_IS_DEV=0 electron .",
     "dev:server": "cd app && yarn start",
     "dev:start": "wait-on tcp:3000 && cross-env ELECTRON_IS_DEV=1 npx electronmon --trace-warnings .",
-    "pack": "electron-packager . --asar --overwrite --out releases --ignore './app/src|./app/node_modules'"
+    "package": "electron-packager . --overwrite --out releases --ignore 'app'",
+    "release": "yarn build:app && yarn package"
   },
   "devDependencies": {
     "concurrently": "^7.6.0",
+    "del-cli": "^5.0.0",
     "electron": "^23.0.0",
     "electron-packager": "^17.1.1",
+    "move-cli": "^2.0.0",
     "wait-on": "^7.0.1"
   },
   "dependencies": {
